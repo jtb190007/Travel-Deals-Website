@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<title>Cruises</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Cruises</h1>
+<h3>Soar By Sea</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+</ul>
+</div>
+
+<p>Between</p>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+<form name="cruiseForm" id="cruiseForm">
+
+    <label for="destination">Destination:</label>
+    <select id="destination" required>
+        <option value="choose">Please choose a destination</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Bahamas">Bahamas</option>
+        <option value="Europe">Europe</option>
+        <option value="Mexico">Mexico</option>
+    </select>
+    <br/>
+    <label for="departingBetween">Departing Between:</label>
+    <input type="date" id="departingBetween" required>
+    <br/>
+    <label for="durationMin">Duration (Minimum Days):</label>
+    <input type="number" id="durationMin" required>
+    <br/>
+    <label for="durationMax">Duration (Maximum Days):</label>
+    <input type="number" id="durationMax" required>
+    <br/>
+    <label for="guess">Guesses:</label>
+	<label for="adults">Adults:</label>
+	<input type="number" id="adults" name="adults" min="0" max="4" required>
+
+	<label for="children">Children:</label>
+	<input type="number" id="children" name="children" min="0" max="4" required>
+
+	<label for="infants">Infants:</label>
+	<input type="number" id="infants" name="infants" min="0" max="4" required>
+	<br/>
+	<input type="submit" value="Search">
+</form>
+
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+
+<p>Any results will be shown below</p>
+
+<div class="footer">
+<h3>Search Results:</h3>
+<div id="result">None</div>
+</div>
+
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+<script>
+$(document).ready(function () {
+    $('#cruiseForm').on('submit', function (event) {
+        event.preventDefault();
+
+        const destination = $('#destination').val();
+        const departingBetween = new Date($('#departingBetween').val());
+        const durationMin = parseInt($('#durationMin').val(), 10);
+        const durationMax = parseInt($('#durationMax').val(), 10);
+        const numAdults = parseInt($('#adults').val(), 10);
+        const numChildren = parseInt($('#children').val(), 10);
+        //const numGuests = parseInt($('#guess').val(), 10);
+        const numGuests = numAdults + numChildren;
+        const infants = parseInt($('#infants').val(), 10);
+
+        const errors = [];
+
+        //Destination validation
+        const validDestinations = ['Alaska', 'Bahamas', 'Europe', 'Mexico'];
+        if (!validDestinations.includes(destination)) {
+            errors.push("Please choose a valid destination.");
+        }
+
+        //Departing validation
+        const startDate = new Date('2024-09-01');
+        const endDate = new Date('2024-12-01');
+        if (departingBetween < startDate || departingBetween > endDate) {
+            errors.push("Please choose a date between Sep. 1, 2024 and Dec. 1, 2024.");
+        }
+
+        //Duration validation
+        if (durationMin < 3 || durationMax > 10 || durationMin > durationMax) {
+            errors.push("Please make sure the duration is between 3 to 10 days. Minimum cannot be more than maximum.");
+        }
+
+        //Guests validation
+        if (numGuests < 1 || numGuests > 2) {
+            errors.push("Number of guests cannot be more than 2 for each room.");
+        }
+
+        if (errors.length > 0) {
+            if (errors.length == 1) {
+            	var e = "Error detected: \n";
+            } else {
+		var e = "Errors detected: \n";
+            }
+		alert(e + "* " + errors.join("\n* "));
+            const displayInfo = `None`;
+            $('#result').html(displayInfo).show();
+        } else {
+            const displayInfo = `
+                <p>Destination: ${destination}</p>
+                <p>Departing Between: ${$('#departingBetween').val()}</p>
+                <p>Duration: ${durationMin} - ${durationMax} days</p>
+                <p>Number of Guests: ${numGuests} (Infants: ${infants})</p>
+            `;
+            $('#result').html(displayInfo).show();
+        }
+    });
+});
+
+</script>
+
+</html>

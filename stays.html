@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>Stays</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Stays</h1>
+<h3>Rest Your Soaring Wings</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+</ul>
+</div>
+
+<p>Between</p>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+<form name="stayForm" id="stay" onsubmit="return validateStaysForm()">
+
+	<label for="city">City:</label>
+		<select name="states" id="states" required onchange="getCities(this.value)">
+  			<option value="choose">Please choose a State</option>
+			<option value="Texas">Texas</option>
+			<option value="California">California</option>
+		</select>
+
+		<select name="cities" id="cities" required hidden>
+ 			<option selected>Please choose a City</option>
+		</select>
+	<br/>
+	<label for="checkin">Check In Date:</label>
+	<input type="date" id="checkin" name="checkin" min="2024-09-01" max="2024-12-01" required>
+	<br/>
+	<label for="checkout">Check Out Date:</label>
+	<input type="date" id="checkout" name="checkout" min="2024-09-01" max="2024-12-01" required>
+	<br/>
+	<label for="guess">Guesses:</label>
+	<label for="adults">Adults:</label>
+	<input type="number" id="adults" name="adults" min="0" max="4" required>
+
+	<label for="children">Children:</label>
+	<input type="number" id="children" name="children" min="0" max="4" required>
+
+	<label for="infants">Infants:</label>
+	<input type="number" id="infants" name="infants" min="0" max="4" required>
+	<br/>
+	<input type="submit" value="Search">
+
+</form>
+
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+
+<p>Any results will be shown below</p>
+
+<div class="footer">
+<h3>Search Results:</h3>
+<p id="results">None</p>
+</div>
+
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+
+<script>
+	var results = document.getElementById("results");
+	var defaultBorder = document.getElementById("checkin").style.borderColor;
+	var errorBorder = "#ff4d4d";
+
+	var stateCities = {
+  		"Texas": ["Austin", "Brownsville", "Corpus Christi", "Dallas", "El Paso", "Houston", "Lubbock", "San Antonio", "Waco", "Wichita Falls"],
+  		"California": ["Fresno", "Long Beach", "Los Angeles", "Monterey", "Oakland", "Palm Springs", "Sacramento", "San Diego", "San Francisco", "Santa Maria"]
+	}
+
+	function validateStaysForm() {
+		var adults = document.getElementById("adults").value;
+		var children = document.getElementById("children").value;
+		var infants = document.getElementById("infants").value;
+
+		const checkin = new Date(document.getElementById("checkin").value);
+		const checkout = new Date(document.getElementById("checkout").value);
+
+		var errors = [];
+
+		if (document.getElementById("states").value == "Please choose a State" || document.getElementById("cities").value == "Please choose a City") {
+			errors.push("Please choose a City from a State");
+			document.getElementById("states").style.borderColor = errorBorder;
+			document.getElementById("cities").style.borderColor = errorBorder;
+			
+		} else {
+			document.getElementById("states").style.borderColor = defaultBorder;
+			document.getElementById("cities").style.borderColor = defaultBorder;
+		}
+
+		if (checkin > checkout) {
+			errors.push("The check in date can't be after the check out date");
+			document.getElementById("checkin").style.borderColor = errorBorder;
+			document.getElementById("checkout").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("checkin").style.borderColor = defaultBorder;
+			document.getElementById("checkout").style.borderColor = defaultBorder;
+		}
+
+		if (adults == 0) {
+			document.getElementById("adults").style.borderColor = errorBorder;
+			document.getElementById("children").style.borderColor = errorBorder;
+			document.getElementById("infants").style.borderColor = errorBorder;
+
+			if (children == 0 && infants == 0) {
+				errors.push("Can't check in no one. Please add an adult.");
+			} else {
+				errors.push("There must be, at least, an adult present. No children or infants will be left unattended");
+			}
+		} else {
+			document.getElementById("adults").style.borderColor = defaultBorder;
+			document.getElementById("children").style.borderColor = defaultBorder;
+			document.getElementById("infants").style.borderColor = defaultBorder;
+
+			if (adults > 2) {
+				errors.push("No more than 2 adults can be present");
+				document.getElementById("adults").style.borderColor = errorBorder;
+			} else {
+				document.getElementById("adults").style.borderColor = defaultBorder;
+			}
+
+			if (children > 2) {
+				errors.push("No more than 2 children can be present");
+				document.getElementById("children").style.borderColor = errorBorder;
+			} else {
+				document.getElementById("children").style.borderColor = defaultBorder;
+			}
+		}
+
+		if (errors.length > 0) {
+			if (errors.length == 1) {
+				var e = "Error detected: \n";
+			} else {
+				var e = "Errors detected: \n";
+			}
+			alert(e + "* " + errors.join("\n* "));
+			results.innerHTML = "None";
+		} else {
+			alert("Form submitted successfully!");
+			searchResults();
+		}
+		return false;
+	}
+
+	function searchResults() {
+		var checkinDate = stayForm["checkin"].value.substring(5, 7)+"/"+stayForm["checkin"].value.substring(8, 10)+"/"+stayForm["checkin"].value.substring(0, 4);
+		var checkoutDate = stayForm["checkout"].value.substring(5, 7)+"/"+stayForm["checkout"].value.substring(8, 10)+"/"+stayForm["checkout"].value.substring(0, 4);
+
+		results.innerHTML = "City: " + stayForm["cities"].value + ", " + stayForm["states"].value + "<br/>Check In Date: " + checkinDate + "<br/>Check Out Date: "  + checkoutDate + "<br/>Adults: " + stayForm["adults"].value + "<br/>Children: " + stayForm["children"].value + "<br/>Infants: " + stayForm["infants"].value + "<br/>";
+		return false;
+	}
+
+	function getCities(state) {
+		var currCities = document.getElementById("cities");
+		var choose = currCities.querySelectorAll('option')[0];		
+
+		if (state == "choose") {
+			currCities.setAttribute("hidden","hidden");
+		} else {
+			currCities.removeAttribute("hidden");
+			currCities.innerHTML = '';
+			currCities.appendChild(choose);
+
+			for (var i = 0; i < stateCities[state].length; i++) {
+				var opt = document.createElement("option");
+				opt.value = stateCities[state][i];
+				opt.innerHTML = stateCities[state][i];
+				currCities.appendChild(opt);
+			}
+			currCities.selectedIndex = 0;
+		}
+	}
+</script>
+
+</html>

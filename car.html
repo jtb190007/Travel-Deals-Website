@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>Car</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Car</h1>
+<h3>Soar On Land</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+</ul>
+</div>
+
+<p>Between</p>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+	<form name="carForm" id="carForm" onsubmit="return validateCarForm()">
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+            </br>
+            <label for="carType">Type of Car:</label>
+            <select id="carType" required>
+                <option value="choose">Please choose a car type</option>
+                <option value="Economy">Economy</option>
+                <option value="SUV">SUV</option>
+                <option value="Compact">Compact</option>
+                <option value="Midsize">Midsize</option>
+            </select>
+            </br>
+            <label for="checkInDate">Check-In Date:</label>
+            <input type="date" id="checkInDate" required>
+            </br>
+            <label for="checkOutDate">Check-Out Date:</label>
+            <input type="date" id="checkOutDate" required>
+            </br>
+            <input type="submit" value="Submit">
+        </form>
+
+        <div id="errorMessages"></div>
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+
+<p>Any results will be shown below</p>
+
+<div class="footer">
+<h3>Search Results:</h3>
+<p id="results">None</p>
+</div>
+
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+<script>
+	function validateCarForm() {
+		const city = document.getElementById('city').value;
+		const carType = document.getElementById('carType').value;
+		const checkInDate = new Date(document.getElementById('checkInDate').value);
+		const checkOutDate = new Date(document.getElementById('checkOutDate').value);
+
+		const errors = [];
+
+		// City validation
+		if (!city) {
+			errors.push("Please enter a valid city name.");
+		}
+
+		// Car type validation
+		const validCarTypes = ['Economy', 'SUV', 'Compact', 'Midsize'];
+		if (!validCarTypes.includes(carType)) {
+			errors.push("Please choose a valid car type.");
+		}
+
+    	// Date validation
+    	const startDate = new Date('2024-09-01');
+    	const endDate = new Date('2024-12-01');
+    	if (checkInDate < startDate || checkInDate > endDate || checkOutDate < startDate || checkOutDate > endDate) {
+			errors.push("Check-in and check-out dates must be between Sep. 1, 2024 and Dec. 1, 2024.");
+		}
+
+		if (checkOutDate <= checkInDate) {
+			errors.push("Check-out date must be later than check-in date.");
+		}
+
+		const showError = document.getElementById('errorMessages');
+		const showResult = document.getElementById('results');
+
+		if (errors.length > 0) {
+			showError.innerHTML = errors.join('<br>');
+			showResult.innerHTML = '';
+		} else {
+			showError.innerHTML = '';
+			showResult.innerHTML = `
+				<p>City: ${city}</p>
+				<p>Car Type: ${carType}</p>
+				<p>Check-In Date: ${checkInDate.toLocaleDateString('en-US', { timeZone: 'UTC'})}</p>
+				<p>Check-Out Date: ${checkOutDate.toLocaleDateString('en-US', { timeZone: 'UTC'})}</p>
+				`;
+		}
+		return false;
+	}
+
+</script>
+
+</html>

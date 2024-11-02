@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.15.0/js/all.js" crossorigin="anonymous"></script>
+
+<title>Flights</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Flights</h1>
+<h3>Let's Soar</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="#">Car</a></li>
+<li><a href="#">Cruise</a></li>
+</ul>
+</div>
+
+<p>Between</p>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+	<form name="flightForm" id="flight" onsubmit="return validateFlightForm()">
+		<label for="tripType">Type of Trip:</label>
+        	<input type="radio" id="oneWay" name="tripType" value="One Way Trip" required checked onclick="showArrival('hide')">
+		<label for="tripType">One Way Trip</label>
+        	<input type="radio" id="round" name="tripType" value="Round Trip" onclick="showArrival('show')">
+		<label for="tripType">Round Trip</label>
+		</br>
+		<label for="origin">Origin:</label>
+		<input type="text" id="origin" name="origin" required placeholder="Ex. El Paso">
+		</br>
+		<label for="origin">Destination:</label>
+		<input type="text" id="destination" name="destination" required placeholder="Ex. Fresno">
+		</br>
+		<label for="departure">Departure Date:</label>
+		<input type="text" id="departure" name="departure" required placeholder="MM-DD-YYYY">
+		
+		<label for="arrival" id="arrivalName" hidden></br>Arrival Date:</label>
+		<input type="text" id="arrival" name="arrival" hidden placeholder="MM-DD-YYYY">
+
+		</br>
+		<i class="fas fa-user-circle" id="userIcon" style="font-size:48px" onclick="document.getElementById('passengers').removeAttribute('hidden');document.getElementById('search').setAttribute('hidden','hidden');"}></i>
+		
+		<input id="search" type="submit" value="Search">
+	</form>
+
+
+
+<form name="passengerForm" id="passengers" hidden onsubmit="return validateFlightForm()">
+	<label for="adults">Adults:</label>
+	<input type="number" id="adults" name="adults" value="0" min="0" required>
+	</br>
+	<label for="children">Children:</label>
+	<input type="number" id="children" name="children" value="0" min="0" required>
+	</br>
+	<label for="infants">Infants:</label>
+	<input type="number" id="infants" name="infants" value="0" min="0" required>
+	</br>
+	<input type="submit" value="Search">
+</form>
+
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+
+<p>Any results will be shown below</p>
+
+<div class="footer">
+<h3>Search Results:</h3>
+<p id="results">None</p>
+</div>
+
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+
+<script>
+	var results = document.getElementById("results");
+	var flightForm = document.forms["flightForm"];
+	var ostate = "None";
+	var dstate = "None";
+
+	var defaultBorder = document.getElementById("origin").style.borderColor;
+	var errorBorder = "#ff4d4d";
+
+	var wordRegex = /^[A-Z][a-z]+( [A-Z][a-z]+)?$/;
+	var dateRegex = /^[0-9]{2}-[0-9]{2}-[0-9]{4}/;
+
+	var stateCities = {
+  		"texas": ["Austin", "Brownsville", "Corpus Christi", "Dallas", "El Paso", "Houston", "Lubbock", "San Antonio", "Waco", "Wichita Falls"],
+  		"california": ["Fresno", "Long Beach", "Los Angeles", "Monterey", "Oakland", "Palm Springs", "Sacramento", "San Diego", "San Francisco", "Santa Maria"]
+	}
+
+	function validateFlightForm() {
+		var origin = flightForm["origin"].value;
+		var destination = flightForm["destination"].value;
+		var departure = flightForm["departure"].value;
+		var arrival = flightForm["arrival"].value;
+
+		var numAdults = passengerForm["adults"].value;
+    		var numChildren = passengerForm["children"].value;
+    		var infants = passengerForm["infants"].value;
+
+		var validOrigin = false;
+		var validDestination = false;
+		var validDeparture = false;
+		var validArrival = false;
+
+		const errors = [];
+
+		if (!wordRegex.test(origin)) {
+			errors.push("City name must be alphabetic only and the first letter of each word should be capital");
+			document.getElementById("origin").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("origin").style.borderColor = defaultBorder;
+		}
+
+		if (!wordRegex.test(destination)) {
+			errors.push("City name must be alphabetic only and the first letter of each word should be capital");
+			document.getElementById("destination").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("destination").style.borderColor = defaultBorder;
+		}
+
+		for (var i = 0; i < 10; i++) {
+			if (stateCities["texas"][i] == flightForm["origin"].value) {
+				validOrigin = true;
+				ostate = "Texas";
+			} else if (stateCities["california"][i] == flightForm["origin"].value) {
+				validOrigin = true;
+				ostate = "California";
+			}
+			if (stateCities["texas"][i] == flightForm["destination"].value) {
+				validDestination = true;
+				dstate = "Texas";
+			} else if (stateCities["california"][i] == flightForm["destination"].value) {
+				validDestination = true;
+				dstate = "California";
+			}
+		}
+
+		if (!validOrigin) {
+			errors.push("Inputed origin is not a valid city");
+			document.getElementById("origin").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("origin").style.borderColor = defaultBorder;
+		}
+
+		if (!validDestination) {
+			errors.push("Inputed destination is not a valid city");
+			document.getElementById("destination").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("destination").style.borderColor = defaultBorder;
+		}
+
+		if (validOrigin && validDestination && flightForm["origin"].value == flightForm["destination"].value) {
+			errors.push("Inputed origin and destination can not be the same city");
+			document.getElementById("origin").style.borderColor = errorBorder;
+			document.getElementById("destination").style.borderColor = errorBorder;
+		}
+
+		if (!dateRegex.test(departure)) {
+			errors.push("Departure date should be in MM-DD-YYYY format");
+			document.getElementById("departure").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("departure").style.borderColor = defaultBorder;
+			var departureParts = departure.split("-");
+			var month = parseInt(departureParts[0]);
+			var day = parseInt(departureParts[1]);
+			var year = parseInt(departureParts[2]);
+
+			if (!(((month == 9 || month == 11) && (1 <= day || day <= 30) || (month == 10 && (1 <= day || day <= 31)) || (month == 12 && day == 1)) && year == 2024)) {
+				errors.push("The departure date should be from Sept 1st 2024 to Dec 1st 2024");
+				document.getElementById("departure").style.borderColor = errorBorder;
+			} else {
+				document.getElementById("departure").style.borderColor = defaultBorder;
+				validDeparture = true;
+			}
+		}
+
+		if (!document.getElementById("arrival").hasAttribute("hidden") && !dateRegex.test(arrival)) {
+			errors.push("Arrival date should be in MM-DD-YYYY format");
+			document.getElementById("arrival").style.borderColor = errorBorder;
+		} else if(!document.getElementById("arrival").hasAttribute("hidden")) {
+			document.getElementById("arrival").style.borderColor = defaultBorder;
+			var arrivalParts = arrival.split("-");
+			var month = parseInt(arrivalParts[0]);
+			var day = parseInt(arrivalParts[1]);
+			var year = parseInt(arrivalParts[2]);
+
+			if (!(((month == 9 || month == 11) && (1 <= day || day <= 30) || (month == 10 && (1 <= day || day <= 31)) || (month == 12 && day == 1)) && year == 2024)) {
+				errors.push("The arrival date should be from Sept 1st 2024 to Dec 1st 2024");
+				document.getElementById("arrival").style.borderColor = errorBorder;
+			} else {
+				document.getElementById("arrival").style.borderColor = defaultBorder;
+				validArrival = true;
+			}
+		}
+
+		if (validDeparture && validArrival) {
+			var departureParts = departure.split("-");
+			var dmonth = parseInt(departureParts[0]);
+			var dday = parseInt(departureParts[1]);
+			var dyear = parseInt(departureParts[2]);
+
+			var arrivalParts = arrival.split("-");
+			var amonth = parseInt(arrivalParts[0]);
+			var aday = parseInt(arrivalParts[1]);
+			var ayear = parseInt(arrivalParts[2]);
+
+			const departureDate = new Date(dyear,dmonth,dday);
+			const arrivalDate = new Date(ayear,amonth,aday);
+
+			if (arrivalDate <= departureDate) {
+				errors.push("The check in date can't be on the same day or after the check out date");
+				document.getElementById("departure").style.borderColor = errorBorder;
+				document.getElementById("arrival").style.borderColor = errorBorder;
+			} else {
+				document.getElementById("departure").style.borderColor = defaultBorder;
+				document.getElementById("arrival").style.borderColor = defaultBorder;
+			}
+		}
+
+		if (numAdults > 4 || numChildren > 4 || infants > 4) {
+        	errors.push("Number of passengers for each category can not be more than 4.");
+			document.getElementById("passengers").style.borderColor = errorBorder;
+        } else {
+			document.getElementById("passengers").style.borderColor = defaultBorder;
+		}
+
+		if (errors.length > 0) {
+			if (errors.length == 1) {
+				var e = "Error detected: \n";
+			} else {
+				var e = "Errors detected: \n";
+			}
+			alert(e + "* " + errors.join("\n* "));
+			results.innerHTML = "None";
+		} else {
+			alert("Form submitted successfully!");
+			searchResults();
+		}
+		return false;
+	}
+
+	function showArrival(task) {
+		if (task == "show") {
+			document.getElementById("arrivalName").removeAttribute("hidden");
+			document.getElementById("arrival").removeAttribute("hidden");
+			document.getElementById("arrival").setAttribute("required","required");
+		} else {
+			document.getElementById("arrivalName").setAttribute("hidden","hidden");
+			document.getElementById("arrival").setAttribute("hidden","hidden");
+			document.getElementById("arrival").removeAttribute("required");
+			document.getElementById("arrival").value = "";
+			document.getElementById("arrival").style.borderColor = defaultBorder;
+		}
+	}
+
+	function searchResults() {
+		resultList = "Type of Trip: " + flightForm["tripType"].value + "<br/>Origin City: " + flightForm["origin"].value + ", " + ostate + "<br/>Destination City: " + flightForm["destination"].value + ", " + dstate + "<br/> Departure Date: " + flightForm["departure"].value;
+
+		if (!document.getElementById("arrival").hasAttribute("hidden")) {
+			resultList += "<br/>Arrival Date: " + flightForm["arrival"].value;
+		}
+
+		if (!document.getElementById("passengers").hasAttribute("hidden")) {
+			resultList += "<br/>Adults: " + passengerForm["adults"].value + "<br/>Children: " + passengerForm["children"].value + "<br/>Infants: " + passengerForm["infants"].value;
+		}
+		
+		results.innerHTML = resultList;
+		return false;
+	}
+
+</script>
+
+</html>

@@ -1,0 +1,49 @@
+div.header {
+	background-color: orange;
+	text-align: center;
+}
+ 
+div.row {
+	text-align: center;
+}
+
+div.row:after {
+	clear: both;
+}
+ 
+div.side {
+	float: left;
+	width: 20%;
+}
+ 
+div.main {
+	float: left;
+	width: 80%;
+}
+ 
+div.footer {
+	color: red;
+	background-color: lightgreen;
+	text-align: center;
+}
+ 
+.nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+ 
+.nav li {
+	float: left;
+}
+
+.nav li a {
+	display: block;
+	padding: 8px;
+	background-color: #dddddd;
+}
+
+.time {
+	text-align: right;
+}

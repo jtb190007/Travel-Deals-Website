@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>Contact Us</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Contact Us</h1>
+<h3>Call Without Limits*</h3>
+<h5>*Some limits may apply</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+</ul>
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+    <form name="contactForm" onsubmit="return validateContactForm()" >
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required style="margin: 5px 0px" placeholder="Ex. John">
+	</br>
+	<label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required style="margin: 5px 0px" placeholder="Ex. Doe">
+	</br>
+	<label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
+	</br>
+	<label for="gender">Gender:</label>
+        <input type="radio" id="male" name="gender" value="Male" required>
+	<label for="gender">Male</label>
+	<input type="radio" id="female" name="gender" value="Female">
+	<label for="gender">Female</label>
+	<input type="radio" id="prefer" name="gender" value="I prefer not to say">
+	<label for="gender">I prefer not to say</label>
+	</br>
+	<label for="email">Email Address:</label>
+        <input type="text" id="email" name="email" required style="margin: 5px 0px" placeholder="Ex. name@mail.com">
+	</br>
+	<label for="email">Comments:</label>
+        <textarea id="comment" name="comment" rows="4" cols="50" required style="margin: 5px 0px"></textarea>
+
+	</br>
+        <button type="submit">Submit Info</button>
+    </form>
+
+</div>
+
+</div>
+
+
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+<script>
+	var defaultBorder = document.getElementById("firstName").style.borderColor;
+	var errorBorder = "#ff4d4d";
+
+	function validateContactForm() {
+		var firstName = document.forms["contactForm"]["firstName"].value;
+		var lastName = document.forms["contactForm"]["lastName"].value;
+		var phoneNumber = document.forms["contactForm"]["phoneNumber"].value;
+		var email = document.forms["contactForm"]["email"].value;
+		var comment = document.forms["contactForm"]["comment"].value;
+
+		var errors = [];
+
+		var nameRegex = /^[A-Z][a-z]+$/;
+		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
+		var emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
+		var commentRegex = /.{10,}/;
+
+		if (!nameRegex.test(firstName)) {
+			errors.push("First name must be alphabetic only and have the first letter be capital");
+			document.getElementById("firstName").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("firstName").style.borderColor = defaultBorder;
+		}
+
+		if (!nameRegex.test(lastName)) {
+			errors.push("Last name must be alphabetic only and have the first letter be capital");
+			document.getElementById("lastName").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("lastName").style.borderColor = defaultBorder;
+		}
+
+		if (firstName == lastName) {
+			errors.push("First name and last name can not be the same");
+			document.getElementById("firstName").style.borderColor = errorBorder;
+			document.getElementById("lastName").style.borderColor = errorBorder;
+		}
+
+		if (!phoneRegex.test(phoneNumber)) {
+			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
+			document.getElementById("phoneNumber").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
+		}
+
+		if (!emailRegex.test(email)) {
+			errors.push("Email address must contain @ and .");
+			document.getElementById("email").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("email").style.borderColor = defaultBorder;
+		}
+
+		if (!commentRegex.test(comment)) {
+			errors.push("Comments must be at least 10 characters");
+			document.getElementById("comment").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("comment").style.borderColor = defaultBorder;
+		}
+
+		if (errors.length > 0) {
+			if (errors.length == 1) {
+				var e = "Error detected: \n";
+			} else {
+				var e = "Errors detected: \n";
+			}
+			alert(e + "* " + errors.join("\n* "));
+			return false;
+		} else {
+			alert("Form submitted successfully!");
+		}
+	}
+</script>
+
+</html>
