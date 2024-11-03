@@ -10,7 +10,7 @@
 <div class="header">
 <h1>Contact Us</h1>
 <h3>Call Without Limits*</h3>
-<h5>*Some limits may apply</h3>
+<h5>*Some limits may apply</h5>
 </div>
 
 <div class="nav">
@@ -43,16 +43,16 @@
 
 <div class="main">
 
-    <form name="contactForm" onsubmit="return validateContactForm()" >
+    <form name="contactForm" onsubmit="return validateContactForm()">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" required style="margin: 5px 0px" placeholder="Ex. John">
-	</br>
+	<br>
 	<label for="lastName">Last Name:</label>
         <input type="text" id="lastName" name="lastName" required style="margin: 5px 0px" placeholder="Ex. Doe">
-	</br>
+	<br>
 	<label for="phoneNumber">Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
-	</br>
+	<br>
 	<label for="gender">Gender:</label>
         <input type="radio" id="male" name="gender" value="Male" required>
 	<label for="gender">Male</label>
@@ -60,14 +60,14 @@
 	<label for="gender">Female</label>
 	<input type="radio" id="prefer" name="gender" value="I prefer not to say">
 	<label for="gender">I prefer not to say</label>
-	</br>
+	<br>
 	<label for="email">Email Address:</label>
         <input type="text" id="email" name="email" required style="margin: 5px 0px" placeholder="Ex. name@mail.com">
-	</br>
+	<br>
 	<label for="email">Comments:</label>
         <textarea id="comment" name="comment" rows="4" cols="50" required style="margin: 5px 0px"></textarea>
 
-	</br>
+	<br>
         <button type="submit">Submit Info</button>
     </form>
 
@@ -153,9 +153,42 @@
 			alert(e + "* " + errors.join("\n* "));
 			return false;
 		} else {
+			endorser();
 			alert("Form submitted successfully!");
 		}
 	}
+
+	function endorser() {
+		var firstName = document.forms["contactForm"]["firstName"].value;
+		var lastName = document.forms["contactForm"]["lastName"].value;
+		var phoneNumber = document.forms["contactForm"]["phoneNumber"].value;
+		var email = document.forms["contactForm"]["email"].value;
+		var comment = document.forms["contactForm"]["comment"].value;
+
+		var xhr;
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		var xmlString = "<userinfo>" + 
+			" <firstname>" + escape(firstName) + "</firstname>" + 
+			" <lastname>" + escape(lastName) + "</lastname>" + 
+			" <phonenumber>" + escape(phoneNumber) + "</phonenumber>" + 
+			" <email>" + escape(email) + "</email>" + 
+			" <comment>" + escape(comment) + "</comment>" + 
+			"</userinfo>";
+
+		var url = "save-userinfo.php";
+
+		xhr.open("POST", url, true);
+
+		xhr.setRequestHeader("Content-Type", "text/xml");
+
+		xhr.send(xmlString);
+	}
+
 </script>
 
 </html>
