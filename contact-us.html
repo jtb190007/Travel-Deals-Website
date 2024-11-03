@@ -164,6 +164,7 @@
 		var phoneNumber = document.forms["contactForm"]["phoneNumber"].value;
 		var email = document.forms["contactForm"]["email"].value;
 		var comment = document.forms["contactForm"]["comment"].value;
+		var phoneNumberConverted = convertPhoneNumber(phoneNumber);
 
 		var xhr;
 		if (window.XMLHttpRequest) {
@@ -175,7 +176,7 @@
 		var xmlString = "<userinfo>" + 
 			" <firstname>" + escape(firstName) + "</firstname>" + 
 			" <lastname>" + escape(lastName) + "</lastname>" + 
-			" <phonenumber>" + escape(phoneNumber) + "</phonenumber>" + 
+			" <phonenumber>" + escape(phoneNumberConverted) + "</phonenumber>" + 
 			" <email>" + escape(email) + "</email>" + 
 			" <comment>" + escape(comment) + "</comment>" + 
 			"</userinfo>";
@@ -187,6 +188,15 @@
 		xhr.setRequestHeader("Content-Type", "text/xml");
 
 		xhr.send(xmlString);
+	}
+
+	function convertPhoneNumber(phone) {
+		var phoneRegex = /^\((\d{3})\) (\d{3})-(\d{4})$/;
+		const match = phone.match(phoneRegex);
+		if (match) {
+			return `${match[1]}-${match[2]}-${match[3]}`;
+		}
+		return phone;
 	}
 
 </script>
