@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flights>
+    <!-- Texas to California -->
+    <flight>
+        <flight-id>TX101</flight-id>
+        <origin>Dallas</origin>
+        <destination>Los Angeles</destination>
+        <departure-date>09-05-2024</departure-date>
+        <arrival-date>09-05-2024</arrival-date>
+        <departure-time>08:00 AM</departure-time>
+        <arrival-time>10:30 AM</arrival-time>
+        <available-seats>50</available-seats>
+        <price>150</price>
+    </flight>
+    <flight>
+        <flight-id>TX102</flight-id>
+        <origin>Houston</origin>
+        <destination>San Francisco</destination>
+        <departure-date>09-06-2024</departure-date>
+        <arrival-date>09-06-2024</arrival-date>
+        <departure-time>09:00 AM</departure-time>
+        <arrival-time>11:45 AM</arrival-time>
+        <available-seats>45</available-seats>
+        <price>180</price>
+    </flight>
+    <flight>
+        <flight-id>TX103</flight-id>
+        <origin>San Antonio</origin>
+        <destination>San Diego</destination>
+        <departure-date>09-07-2024</departure-date>
+        <arrival-date>09-07-2024</arrival-date>
+        <departure-time>07:00 AM</departure-time>
+        <arrival-time>09:30 AM</arrival-time>
+        <available-seats>40</available-seats>
+        <price>170</price>
+    </flight>
+    <flight>
+        <flight-id>TX104</flight-id>
+        <origin>El Paso</origin>
+        <destination>Oakland</destination>
+        <departure-date>09-08-2024</departure-date>
+        <arrival-date>09-08-2024</arrival-date>
+        <departure-time>10:00 AM</departure-time>
+        <arrival-time>12:20 PM</arrival-time>
+        <available-seats>30</available-seats>
+        <price>160</price>
+    </flight>
+    <flight>
+        <flight-id>TX105</flight-id>
+        <origin>Austin</origin>
+        <destination>Sacramento</destination>
+        <departure-date>09-09-2024</departure-date>
+        <arrival-date>09-09-2024</arrival-date>
+        <departure-time>11:00 AM</departure-time>
+        <arrival-time>01:30 PM</arrival-time>
+        <available-seats>35</available-seats>
+        <price>155</price>
+    </flight>
+
+    <!-- California to Texas -->
+    <flight>
+        <flight-id>CA201</flight-id>
+        <origin>Los Angeles</origin>
+        <destination>Dallas</destination>
+        <departure-date>09-10-2024</departure-date>
+        <arrival-date>09-10-2024</arrival-date>
+        <departure-time>02:00 PM</departure-time>
+        <arrival-time>06:00 PM</arrival-time>
+        <available-seats>50</available-seats>
+        <price>150</price>
+    </flight>
+    <flight>
+        <flight-id>CA202</flight-id>
+        <origin>San Francisco</origin>
+        <destination>Houston</destination>
+        <departure-date>09-11-2024</departure-date>
+        <arrival-date>09-11-2024</arrival-date>
+        <departure-time>08:30 AM</departure-time>
+        <arrival-time>12:30 PM</arrival-time>
+        <available-seats>45</available-seats>
+        <price>180</price>
+    </flight>
+    <flight>
+        <flight-id>CA203</flight-id>
+        <origin>San Diego</origin>
+        <destination>San Antonio</destination>
+        <departure-date>09-12-2024</departure-date>
+        <arrival-date>09-12-2024</arrival-date>
+        <departure-time>10:00 AM</departure-time>
+        <arrival-time>02:00 PM</arrival-time>
+        <available-seats>40</available-seats>
+        <price>170</price>
+    </flight>
+    <flight>
+        <flight-id>CA204</flight-id>
+        <origin>Oakland</origin>
+        <destination>El Paso</destination>
+        <departure-date>09-13-2024</departure-date>
+        <arrival-date>09-13-2024</arrival-date>
+        <departure-time>12:00 PM</departure-time>
+        <arrival-time>04:00 PM</arrival-time>
+        <available-seats>30</available-seats>
+        <price>160</price>
+    </flight>
+    <flight>
+        <flight-id>CA205</flight-id>
+        <origin>Sacramento</origin>
+        <destination>Austin</destination>
+        <departure-date>09-14-2024</departure-date>
+        <arrival-date>09-14-2024</arrival-date>
+        <departure-time>03:00 PM</departure-time>
+        <arrival-time>07:00 PM</arrival-time>
+        <available-seats>35</available-seats>
+        <price>155</price>
+    </flight>
+
+    <!-- add more flights here (yia180000) -->
+</flights>
