@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="mystyle.css">
 <script src="myscripts.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.15.0/js/all.js" crossorigin="anonymous"></script>
-<script src="https://momentjs.com/downloads/moment.min.js"></script>
 
 <title>Flights</title>
 
@@ -119,8 +118,6 @@
 	var errorBorder = "#ff4d4d";
 	var wordRegex = /^[A-Z][a-z]+( [A-Z][a-z]+)?$/;
 	var dateRegex = /^[0-9]{2}-[0-9]{2}-[0-9]{4}$/;
-	var from = new Date('2024/09/01');
-	var to = new Date('2024/12/01');
 
 	var stateCities = {
 		"texas": ["Austin", "Brownsville", "Corpus Christi", "Dallas", "El Paso", "Houston", "Lubbock", "San Antonio", "Waco", "Wichita Falls"],
@@ -186,9 +183,12 @@
 			document.getElementById("departure").style.borderColor = errorBorder;
 		} else {
 			document.getElementById("departure").style.borderColor = defaultBorder;
-			var departureDate = moment(departure, "MM-DD-YYYY").toDate();
+			var departureParts = departure.split("-");
+			var month = parseInt(departureParts[0]);
+			var day = parseInt(departureParts[1]);
+			var year = parseInt(departureParts[2]);
 
-			if (departureDate < from || departureDate > to) {
+			if (!(((month == 9 || month == 11) && (1 <= day && day <= 30)) || (month == 10 && (1 <= day && day <= 31)) || (month == 12 && day == 1)) && year == 2024) {
 				errors.push("The departure date should be from Sept 1st 2024 to Dec 1st 2024");
 				document.getElementById("departure").style.borderColor = errorBorder;
 			} else {
@@ -202,9 +202,12 @@
 			document.getElementById("arrival").style.borderColor = errorBorder;
 		} else if (!document.getElementById("arrival").hasAttribute("hidden")) {
 			document.getElementById("arrival").style.borderColor = defaultBorder;
-			var arrivalDate = moment(arrival, "MM-DD-YYYY").toDate();
+			var arrivalParts = arrival.split("-");
+			var amonth = parseInt(arrivalParts[0]);
+			var aday = parseInt(arrivalParts[1]);
+			var ayear = parseInt(arrivalParts[2]);
 
-			if (arrivalDate < from || arrivalDate > to) {
+			if (!(((amonth == 9 || amonth == 11) && (1 <= aday && aday <= 30)) || (amonth == 10 && (1 <= aday && aday <= 31)) || (amonth == 12 && aday == 1)) && ayear == 2024) {
 				errors.push("The arrival date should be from Sept 1st 2024 to Dec 1st 2024");
 				document.getElementById("arrival").style.borderColor = errorBorder;
 			} else {
@@ -256,53 +259,144 @@
 	}
 
 	function displayFlights(xml) {
-    		var xmlDoc = xml.responseXML;
-    		var flights = xmlDoc.getElementsByTagName("flight");
-    		var origin = flightForm["origin"].value;
-    		var destination = flightForm["destination"].value;
-    		var departure = flightForm["departure"].value;
-    		var numPassengers = parseInt(passengerForm["adults"].value) + 
+    var xmlDoc = xml.responseXML;
+    var flights = xmlDoc.getElementsByTagName("flight");
+    var origin = flightForm["origin"].value;
+    var destination = flightForm["destination"].value;
+    var departure = flightForm["departure"].value;
+    var numPassengers = parseInt(passengerForm["adults"].value) + 
                         parseInt(passengerForm["children"].value) + 
                         parseInt(passengerForm["infants"].value);
 
-    		var resultHTML = "<h3>Available Flights:</h3>";
-    		var hasResults = false;
-    		var departureDate = moment(departure, "MM-DD-YYYY").toDate();
-		var threeDaysRange = [];
+    var resultHTML = "<h3>Available Flights:</h3>";
+    var hasExactMatch = false;
+    var hasNearbyMatches = false;
+    var departureDate = new Date(departure);
+    var threeDaysRange = [];
 
-		// Generate date range for ±3 days
-		for (var offset = -3; offset <= 3; offset++) {
-			var date = new Date(departureDate);
-        		date.setDate(departureDate.getDate() + offset);
-        		var formattedDate = ("0" + (date.getMonth() + 1)).slice(-2) + "-" + 
+    // Generate date range for ±3 days
+    for (var offset = -3; offset <= 3; offset++) {
+        var date = new Date(departureDate);
+        date.setDate(departureDate.getDate() + offset);
+        var formattedDate = ("0" + (date.getMonth() + 1)).slice(-2) + "-" + 
                             ("0" + date.getDate()).slice(-2) + "-" + 
                             date.getFullYear();
-        		threeDaysRange.push(formattedDate);
-		}
+        threeDaysRange.push(formattedDate);
+    }
 
-		for (var i = 0; i < flights.length; i++) {
-			var flightOrigin = flights[i].getElementsByTagName("origin")[0].childNodes[0].nodeValue;
-			var flightDestination = flights[i].getElementsByTagName("destination")[0].childNodes[0].nodeValue;
-			var flightDate = flights[i].getElementsByTagName("departure-date")[0].childNodes[0].nodeValue;
-			var availableSeats = parseInt(flights[i].getElementsByTagName("available-seats")[0].childNodes[0].nodeValue);
+    // Check for exact matches
+    for (var i = 0; i < flights.length; i++) {
+        var flightOrigin = flights[i].getElementsByTagName("origin")[0].childNodes[0].nodeValue;
+        var flightDestination = flights[i].getElementsByTagName("destination")[0].childNodes[0].nodeValue;
+        var flightDate = flights[i].getElementsByTagName("departure-date")[0].childNodes[0].nodeValue;
+        var availableSeats = parseInt(flights[i].getElementsByTagName("available-seats")[0].childNodes[0].nodeValue);
 
-			if (flightOrigin === origin && flightDestination === destination && threeDaysRange.includes(flightDate) && availableSeats >= numPassengers) {
-				hasResults = true;
-				resultHTML += "<p>Flight ID: " + flights[i].getElementsByTagName("flight-id")[0].childNodes[0].nodeValue + "<br>" +
-					"Departure Date: " + flightDate + "<br>" +
-					"Departure Time: " + flights[i].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue + "<br>" +
-					"Arrival Date: " + flights[i].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue + "<br>" +
-					"Arrival Time: " + flights[i].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue + "<br>" +
-					"Available Seats: " + availableSeats + "<br>" +
-					"Price: $" + flights[i].getElementsByTagName("price")[0].childNodes[0].nodeValue + "</p>";
-        		}
-    		}
+        if (flightOrigin === origin && flightDestination === destination && flightDate === departure && availableSeats >= numPassengers) {
+            hasExactMatch = true;
+            resultHTML += `<p>
+                Flight ID: ${flights[i].getElementsByTagName("flight-id")[0].childNodes[0].nodeValue}<br>
+                Departure Date: ${flightDate}<br>
+                Departure Time: ${flights[i].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue}<br>
+                Arrival Date: ${flights[i].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue}<br>
+                Arrival Time: ${flights[i].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue}<br>
+                Available Seats: ${availableSeats}<br>
+                Price: $${flights[i].getElementsByTagName("price")[0].childNodes[0].nodeValue}<br>
+                <button onclick='addToCart(${JSON.stringify({
+                    flightId: flights[i].getElementsByTagName("flight-id")[0].childNodes[0].nodeValue,
+                    origin: flightOrigin,
+                    destination: flightDestination,
+                    departureDate: flightDate,
+                    departureTime: flights[i].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue,
+                    arrivalDate: flights[i].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue,
+                    arrivalTime: flights[i].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue,
+                    price: flights[i].getElementsByTagName("price")[0].childNodes[0].nodeValue
+                })})'>Select Flight</button>
+            </p>`;
+        }
+    }
 
-    		if (!hasResults) {
-        		resultHTML += "<p>No flights found for the specified date. Showing flights within 3 days before and after the requested date:</p>";
-    		}
-    		results.innerHTML = resultHTML;
-	}
+    // Check for nearby matches (within ±3 days)
+    if (!hasExactMatch) {
+        resultHTML += `<p>No flights available on the selected date (${departure}). Here are flights within 3 days before and after:</p>`;
+        for (var j = 0; j < flights.length; j++) {
+            var flightOrigin = flights[j].getElementsByTagName("origin")[0].childNodes[0].nodeValue;
+            var flightDestination = flights[j].getElementsByTagName("destination")[0].childNodes[0].nodeValue;
+            var flightDate = flights[j].getElementsByTagName("departure-date")[0].childNodes[0].nodeValue;
+            var availableSeats = parseInt(flights[j].getElementsByTagName("available-seats")[0].childNodes[0].nodeValue);
+
+            if (flightOrigin === origin && flightDestination === destination && availableSeats >= numPassengers && threeDaysRange.includes(flightDate)) {
+                hasNearbyMatches = true;
+                resultHTML += `<p>
+					Flight ID: ${flights[j].getElementsByTagName("flight-id")[0].childNodes[0].nodeValue}<br>
+					Departure Date: ${flightDate}<br>
+					Departure Time: ${flights[j].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue}<br>
+					Arrival Date: ${flights[j].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue}<br>
+					Arrival Time: ${flights[j].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue}<br>
+					Available Seats: ${availableSeats}<br>
+					Price: $${flights[j].getElementsByTagName("price")[0].childNodes[0].nodeValue}<br>
+					<button onclick='addToCart(${JSON.stringify({
+						flightId: flights[j].getElementsByTagName("flight-id")[0].childNodes[0].nodeValue,
+						origin: flightOrigin,
+						destination: flightDestination,
+						departureDate: flightDate,
+						departureTime: flights[j].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue,
+						arrivalDate: flights[j].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue,
+						arrivalTime: flights[j].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue,
+						availableSeats: availableSeats, // Pass availableSeats here
+						price: flights[j].getElementsByTagName("price")[0].childNodes[0].nodeValue
+					})})'>Select Flight</button>
+					</p>`;
+
+            }
+        }
+    }
+
+    if (!hasExactMatch && !hasNearbyMatches) {
+        resultHTML += "<p>No flights available within ±3 days.</p>";
+    }
+
+    results.innerHTML = resultHTML;
+}
+
+function addToCart(flight) {
+    localStorage.setItem("selectedFlight", JSON.stringify(flight));
+    alert("Flight added to cart! Proceed to the cart page to complete booking.");
+    window.location.href = "cart.html";  // Redirect to cart page
+}
+
+
+function addToCart(flight) {
+    const numAdults = parseInt(passengerForm["adults"].value) || 0;
+    const numChildren = parseInt(passengerForm["children"].value) || 0;
+    const numInfants = parseInt(passengerForm["infants"].value) || 0;
+
+    console.log("Number of Adults:", numAdults);
+    console.log("Number of Children:", numChildren);
+    console.log("Number of Infants:", numInfants);
+
+    // Store the selected flight and passenger details in localStorage
+    const completeFlightDetails = {
+        flightId: flight.flightId,
+        origin: flight.origin,
+        destination: flight.destination,
+        departureDate: flight.departureDate,
+        departureTime: flight.departureTime,
+        arrivalDate: flight.arrivalDate,
+        arrivalTime: flight.arrivalTime,
+        availableSeats: parseInt(flight.availableSeats), // Ensure seats are numeric
+        price: parseFloat(flight.price), // Ensure price is numeric
+    };
+
+    localStorage.setItem("selectedFlight", JSON.stringify(completeFlightDetails));
+    localStorage.setItem("numAdults", numAdults);
+    localStorage.setItem("numChildren", numChildren);
+    localStorage.setItem("numInfants", numInfants);
+
+    alert("Flight added to cart! Proceed to the cart page to complete booking.");
+    window.location.href = "cart.html"; // Redirect to cart page
+}
+
+
 
 </script>
 

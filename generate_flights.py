@@ -12,12 +12,14 @@ california_cities = ["Los Angeles", "San Francisco", "San Diego", "Sacramento", 
 def generate_flights(num_flights=50):
     flights = []
     for i in range(1, num_flights + 1):
+        # Determine origin and destination
         origin = random.choice(texas_cities if i % 2 == 1 else california_cities)
         destination = random.choice(california_cities if i % 2 == 1 else texas_cities)
         base_date = datetime(2024, 9, 1) + timedelta(days=random.randint(0, 90))
         departure_time = base_date + timedelta(hours=random.randint(6, 18))  # Departure between 6 AM to 6 PM
         arrival_time = departure_time + timedelta(hours=random.randint(2, 4))  # Flight duration 2-4 hours
 
+        # Add one-way flight
         flights.append({
             "flight-id": f"{'TX' if i % 2 == 1 else 'CA'}{100 + i}",
             "origin": origin,
@@ -29,6 +31,24 @@ def generate_flights(num_flights=50):
             "available-seats": str(random.randint(30, 50)),
             "price": str(random.randint(150, 250))
         })
+
+        # Add round-trip flight
+        if i % 2 == 0:  # Alternate between one-way and round-trip flights
+            return_date = base_date + timedelta(days=random.randint(1, 7))  # Return date within 1-7 days
+            return_departure_time = return_date + timedelta(hours=random.randint(6, 18))
+            return_arrival_time = return_departure_time + timedelta(hours=random.randint(2, 4))
+            flights.append({
+                "flight-id": f"{'CA' if i % 2 == 1 else 'TX'}{200 + i}",
+                "origin": destination,  # Reverse the origin and destination
+                "destination": origin,
+                "departure-date": return_departure_time.strftime("%m-%d-%Y"),
+                "arrival-date": return_arrival_time.strftime("%m-%d-%Y"),
+                "departure-time": return_departure_time.strftime("%I:%M %p"),
+                "arrival-time": return_arrival_time.strftime("%I:%M %p"),
+                "available-seats": str(random.randint(30, 50)),
+                "price": str(random.randint(150, 250))
+            })
+
     return flights
 
 # Create the root element

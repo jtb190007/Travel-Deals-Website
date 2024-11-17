@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="mystyle.css">
+    <script src="myscripts.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <p id="time" class="time"></p>
+
+    <div class="header">
+        <h1>Cart</h1>
+        <h3>Review and Complete Your Booking</h3>
+    </div>
+
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+            <li><a href="flight.html">Flight</a></li>
+            <li><a href="stays.html">Stays</a></li>
+            <li><a href="#">Car</a></li>
+            <li><a href="#">Cruise</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="side">
+            <h2>Selected Flight</h2>
+            <div id="flightInfo">
+                <!-- Flight information will be dynamically inserted here -->
+            </div>
+            <p id="availableSeats"></p>
+        </div>
+
+        <div class="main">
+            <h2>Enter Passenger Details</h2>
+            <form id="passengerForm" onsubmit="bookFlight(event)">
+                <div id="passengerDetails">
+                    <!-- Passenger input fields will be dynamically added here -->
+                </div>
+                <p>Total Price: $<span id="totalPrice"></span></p>
+                <button type="submit">Book Flight</button>
+            </form>
+
+            <div id="bookingConfirmation" style="display: none;">
+                <h2>Booking Confirmation</h2>
+                <p id="confirmationDetails"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Yusef Alimam (YIA180000)</p>
+        <p>John Bui (JTB190007)</p>
+        <p>Cesar Saenz (CAS190006)</p>
+        <p>CS 6314.002</p>
+    </div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Loading cart page...");
+
+    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight"));
+    console.log("Retrieved selected flight from localStorage:", selectedFlight);
+
+    if (!selectedFlight) {
+        alert("No flight selected. Redirecting to the search page.");
+        window.location.href = "flight.html";
+        return;
+    }
+
+    const availableSeats = parseInt(selectedFlight.availableSeats) || 0;
+    const pricePerAdult = parseFloat(selectedFlight.price) || 0;
+
+    console.log("Parsed availableSeats:", availableSeats);
+    console.log("Parsed pricePerAdult:", pricePerAdult);
+
+    if (availableSeats <= 0) {
+        alert("No seats are available for the selected flight.");
+        window.location.href = "flight.html";
+        return;
+    }
+
+    const flightInfoDiv = document.getElementById("flightInfo");
+    flightInfoDiv.innerHTML = `
+        <p>
+            Flight ID: ${selectedFlight.flightId}<br>
+            Origin: ${selectedFlight.origin}<br>
+            Destination: ${selectedFlight.destination}<br>
+            Departure Date: ${selectedFlight.departureDate}<br>
+            Departure Time: ${selectedFlight.departureTime}<br>
+            Arrival Date: ${selectedFlight.arrivalDate}<br>
+            Arrival Time: ${selectedFlight.arrivalTime}<br>
+            Price per Adult: $${pricePerAdult.toFixed(2)}<br>
+            Available Seats: ${availableSeats}
+        </p>
+    `;
+
+    const passengerFormDiv = document.getElementById("passengerDetails");
+    const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
+    const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
+    const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
+
+    console.log("Number of Adults:", numAdults);
+    console.log("Number of Children:", numChildren);
+    console.log("Number of Infants:", numInfants);
+
+    addPassengerFields(passengerFormDiv, "Adult", numAdults);
+    addPassengerFields(passengerFormDiv, "Child", numChildren);
+    addPassengerFields(passengerFormDiv, "Infant", numInfants);
+
+    calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants);
+});
+
+function addPassengerFields(container, type, count) {
+    console.log(`Adding ${count} passenger fields for type: ${type}`);
+    for (let i = 0; i < count; i++) {
+        container.innerHTML += `
+            <h3>${type} ${i + 1}</h3>
+            First Name: <input type="text" name="${type.toLowerCase()}FirstName${i}" required><br>
+            Last Name: <input type="text" name="${type.toLowerCase()}LastName${i}" required><br>
+            Date of Birth: <input type="date" name="${type.toLowerCase()}Dob${i}" required><br>
+            SSN: <input type="text" name="${type.toLowerCase()}Ssn${i}" required><br>
+        `;
+    }
+}
+
+function calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants) {
+    console.log("Calculating total price...");
+    console.log("Price per Adult:", pricePerAdult);
+    console.log("Adults:", numAdults, "Children:", numChildren, "Infants:", numInfants);
+
+    const totalPrice =
+        pricePerAdult * numAdults +
+        pricePerAdult * 0.7 * numChildren +
+        pricePerAdult * 0.1 * numInfants;
+
+    console.log("Total Price:", totalPrice);
+
+    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+}
+
+function bookFlight(event) {
+    event.preventDefault();
+
+    console.log("Booking flight...");
+
+    // Retrieve selected flight and passenger counts from localStorage
+    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight"));
+    const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
+    const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
+    const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
+    const numPassengers = numAdults + numChildren + numInfants;
+
+    console.log("Selected flight:", selectedFlight);
+    console.log("Passengers: Adults:", numAdults, ", Children:", numChildren, ", Infants:", numInfants);
+    console.log("Total passengers:", numPassengers);
+
+    if (!selectedFlight || !selectedFlight.flightId || numPassengers <= 0) {
+        alert("Invalid flight selection or passenger details.");
+        return;
+    }
+
+    if (selectedFlight.availableSeats < numPassengers) {
+        alert("Not enough seats available for this booking.");
+        return;
+    }
+
+    // Construct the URL for the GET request
+    const url = `http://localhost:3000/updateSeats.php?flightId=${selectedFlight.flightId}&decrementBy=${numPassengers}`;
+
+    // Use `fetch` to send the GET request to update seats
+    fetch("http://localhost:3000/updateSeats", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        flightId: selectedFlight.flightId,
+        decrementBy: numPassengers,
+    }),
+})
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log("Backend response:", data);
+
+        if (data.message === "Flight updated successfully") {
+            selectedFlight.availableSeats -= numPassengers;
+            localStorage.setItem("selectedFlight", JSON.stringify(selectedFlight));
+            alert("Seats updated successfully!");
+            showBookingConfirmation(selectedFlight, data.newSeats);
+        } else {
+            throw new Error(data.message || "Failed to update seats.");
+        }
+    })
+    .catch((error) => {
+        console.error("Error updating seats:", error);
+        alert("Failed to update seats. Please try again.");
+    });
+
+}
+
+function showBookingConfirmation(flight, remainingSeats) {
+    const bookingNumber = "BN" + Math.floor(100000 + Math.random() * 900000);
+    const confirmationDiv = document.getElementById("bookingConfirmation");
+    confirmationDiv.innerHTML = `
+        <p>Booking Number: ${bookingNumber}</p>
+        <p>Flight ID: ${flight.flightId}<br>
+           Origin: ${flight.origin}<br>
+           Destination: ${flight.destination}<br>
+           Departure Date: ${flight.departureDate}<br>
+           Departure Time: ${flight.departureTime}<br>
+           Arrival Date: ${flight.arrivalDate}<br>
+           Arrival Time: ${flight.arrivalTime}<br>
+           Remaining Seats: ${remainingSeats}
+        </p>`;
+    confirmationDiv.style.display = "block";
+    alert("Booking confirmed! Details are displayed below.");
+}
+
+
+    </script>
+
+
+</body>
+</html>

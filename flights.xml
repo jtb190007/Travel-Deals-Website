@@ -1,564 +1,564 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <flights>
-    <flight>
-        <flight-id>TX101</flight-id>
-        <origin>Houston</origin>
-        <destination>Los Angeles</destination>
-        <departure-date>11-13-2024</departure-date>
-        <arrival-date>11-13-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>02:00 PM</arrival-time>
-        <available-seats>46</available-seats>
-        <price>212</price>
-    </flight>
-    <flight>
-        <flight-id>CA102</flight-id>
-        <origin>San Diego</origin>
-        <destination>Dallas</destination>
-        <departure-date>11-04-2024</departure-date>
-        <arrival-date>11-04-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>49</available-seats>
-        <price>233</price>
-    </flight>
-    <flight>
-        <flight-id>TX103</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Francisco</destination>
-        <departure-date>09-01-2024</departure-date>
-        <arrival-date>09-01-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>48</available-seats>
-        <price>220</price>
-    </flight>
-    <flight>
-        <flight-id>CA104</flight-id>
-        <origin>Oakland</origin>
-        <destination>Dallas</destination>
-        <departure-date>09-07-2024</departure-date>
-        <arrival-date>09-07-2024</arrival-date>
-        <departure-time>10:00 AM</departure-time>
-        <arrival-time>02:00 PM</arrival-time>
-        <available-seats>46</available-seats>
-        <price>161</price>
-    </flight>
-    <flight>
-        <flight-id>TX105</flight-id>
-        <origin>Austin</origin>
-        <destination>San Francisco</destination>
-        <departure-date>11-15-2024</departure-date>
-        <arrival-date>11-15-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>38</available-seats>
-        <price>203</price>
-    </flight>
-    <flight>
-        <flight-id>CA106</flight-id>
-        <origin>Oakland</origin>
-        <destination>El Paso</destination>
-        <departure-date>09-01-2024</departure-date>
-        <arrival-date>09-01-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>45</available-seats>
-        <price>160</price>
-    </flight>
-    <flight>
-        <flight-id>TX107</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Francisco</destination>
-        <departure-date>09-20-2024</departure-date>
-        <arrival-date>09-20-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>04:00 PM</arrival-time>
-        <available-seats>48</available-seats>
-        <price>186</price>
-    </flight>
-    <flight>
-        <flight-id>CA108</flight-id>
-        <origin>San Francisco</origin>
-        <destination>Houston</destination>
-        <departure-date>09-04-2024</departure-date>
-        <arrival-date>09-04-2024</arrival-date>
-        <departure-time>10:00 AM</departure-time>
-        <arrival-time>12:00 PM</arrival-time>
-        <available-seats>43</available-seats>
-        <price>234</price>
-    </flight>
-    <flight>
-        <flight-id>TX109</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Diego</destination>
-        <departure-date>09-28-2024</departure-date>
-        <arrival-date>09-28-2024</arrival-date>
-        <departure-time>08:00 AM</departure-time>
-        <arrival-time>11:00 AM</arrival-time>
-        <available-seats>41</available-seats>
-        <price>235</price>
-    </flight>
-    <flight>
-        <flight-id>CA110</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Austin</destination>
-        <departure-date>09-11-2024</departure-date>
-        <arrival-date>09-11-2024</arrival-date>
-        <departure-time>09:00 AM</departure-time>
-        <arrival-time>11:00 AM</arrival-time>
-        <available-seats>38</available-seats>
-        <price>236</price>
-    </flight>
-    <flight>
-        <flight-id>TX111</flight-id>
-        <origin>Dallas</origin>
-        <destination>Sacramento</destination>
-        <departure-date>10-06-2024</departure-date>
-        <arrival-date>10-06-2024</arrival-date>
-        <departure-time>06:00 PM</departure-time>
-        <arrival-time>10:00 PM</arrival-time>
-        <available-seats>49</available-seats>
-        <price>162</price>
-    </flight>
-    <flight>
-        <flight-id>CA112</flight-id>
-        <origin>Oakland</origin>
-        <destination>Houston</destination>
-        <departure-date>11-14-2024</departure-date>
-        <arrival-date>11-14-2024</arrival-date>
-        <departure-time>01:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>37</available-seats>
-        <price>175</price>
-    </flight>
-    <flight>
-        <flight-id>TX113</flight-id>
-        <origin>El Paso</origin>
-        <destination>Sacramento</destination>
-        <departure-date>10-03-2024</departure-date>
-        <arrival-date>10-03-2024</arrival-date>
-        <departure-time>01:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>40</available-seats>
-        <price>185</price>
-    </flight>
-    <flight>
-        <flight-id>CA114</flight-id>
-        <origin>San Francisco</origin>
-        <destination>San Antonio</destination>
-        <departure-date>09-11-2024</departure-date>
-        <arrival-date>09-11-2024</arrival-date>
-        <departure-time>01:00 PM</departure-time>
-        <arrival-time>04:00 PM</arrival-time>
-        <available-seats>33</available-seats>
-        <price>238</price>
-    </flight>
-    <flight>
-        <flight-id>TX115</flight-id>
-        <origin>Austin</origin>
-        <destination>San Diego</destination>
-        <departure-date>09-25-2024</departure-date>
-        <arrival-date>09-25-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>40</available-seats>
-        <price>159</price>
-    </flight>
-    <flight>
-        <flight-id>CA116</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Dallas</destination>
-        <departure-date>10-29-2024</departure-date>
-        <arrival-date>10-29-2024</arrival-date>
-        <departure-time>03:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>41</available-seats>
-        <price>227</price>
-    </flight>
-    <flight>
-        <flight-id>TX117</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Francisco</destination>
-        <departure-date>09-09-2024</departure-date>
-        <arrival-date>09-09-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>03:00 PM</arrival-time>
-        <available-seats>37</available-seats>
-        <price>239</price>
-    </flight>
-    <flight>
-        <flight-id>CA118</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>El Paso</destination>
-        <departure-date>09-03-2024</departure-date>
-        <arrival-date>09-03-2024</arrival-date>
-        <departure-time>09:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>50</available-seats>
-        <price>191</price>
-    </flight>
-    <flight>
-        <flight-id>TX119</flight-id>
-        <origin>San Antonio</origin>
-        <destination>San Diego</destination>
-        <departure-date>10-04-2024</departure-date>
-        <arrival-date>10-04-2024</arrival-date>
-        <departure-time>06:00 PM</departure-time>
-        <arrival-time>10:00 PM</arrival-time>
-        <available-seats>36</available-seats>
-        <price>199</price>
-    </flight>
-    <flight>
-        <flight-id>CA120</flight-id>
-        <origin>San Diego</origin>
-        <destination>Houston</destination>
-        <departure-date>09-10-2024</departure-date>
-        <arrival-date>09-10-2024</arrival-date>
-        <departure-time>12:00 PM</departure-time>
-        <arrival-time>03:00 PM</arrival-time>
-        <available-seats>50</available-seats>
-        <price>193</price>
-    </flight>
-    <flight>
-        <flight-id>TX121</flight-id>
-        <origin>San Antonio</origin>
-        <destination>Oakland</destination>
-        <departure-date>11-25-2024</departure-date>
-        <arrival-date>11-25-2024</arrival-date>
-        <departure-time>09:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>44</available-seats>
-        <price>250</price>
-    </flight>
-    <flight>
-        <flight-id>CA122</flight-id>
-        <origin>Sacramento</origin>
-        <destination>Dallas</destination>
-        <departure-date>09-13-2024</departure-date>
-        <arrival-date>09-13-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>31</available-seats>
-        <price>167</price>
-    </flight>
-    <flight>
-        <flight-id>TX123</flight-id>
-        <origin>Dallas</origin>
-        <destination>Sacramento</destination>
-        <departure-date>09-20-2024</departure-date>
-        <arrival-date>09-20-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>09:00 PM</arrival-time>
-        <available-seats>46</available-seats>
-        <price>245</price>
-    </flight>
-    <flight>
-        <flight-id>CA124</flight-id>
-        <origin>Sacramento</origin>
-        <destination>San Antonio</destination>
-        <departure-date>10-25-2024</departure-date>
-        <arrival-date>10-25-2024</arrival-date>
-        <departure-time>06:00 PM</departure-time>
-        <arrival-time>10:00 PM</arrival-time>
-        <available-seats>42</available-seats>
-        <price>237</price>
-    </flight>
-    <flight>
-        <flight-id>TX125</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Diego</destination>
-        <departure-date>09-26-2024</departure-date>
-        <arrival-date>09-26-2024</arrival-date>
-        <departure-time>07:00 AM</departure-time>
-        <arrival-time>10:00 AM</arrival-time>
-        <available-seats>39</available-seats>
-        <price>204</price>
-    </flight>
-    <flight>
-        <flight-id>CA126</flight-id>
-        <origin>San Francisco</origin>
-        <destination>Houston</destination>
-        <departure-date>09-05-2024</departure-date>
-        <arrival-date>09-05-2024</arrival-date>
-        <departure-time>01:00 PM</departure-time>
-        <arrival-time>03:00 PM</arrival-time>
-        <available-seats>47</available-seats>
-        <price>238</price>
-    </flight>
-    <flight>
-        <flight-id>TX127</flight-id>
-        <origin>Austin</origin>
-        <destination>San Diego</destination>
-        <departure-date>11-04-2024</departure-date>
-        <arrival-date>11-04-2024</arrival-date>
-        <departure-time>09:00 AM</departure-time>
-        <arrival-time>12:00 PM</arrival-time>
-        <available-seats>33</available-seats>
-        <price>177</price>
-    </flight>
-    <flight>
-        <flight-id>CA128</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>El Paso</destination>
-        <departure-date>09-20-2024</departure-date>
-        <arrival-date>09-20-2024</arrival-date>
-        <departure-time>03:00 PM</departure-time>
-        <arrival-time>06:00 PM</arrival-time>
-        <available-seats>35</available-seats>
-        <price>173</price>
-    </flight>
-    <flight>
-        <flight-id>TX129</flight-id>
-        <origin>Dallas</origin>
-        <destination>Sacramento</destination>
-        <departure-date>09-27-2024</departure-date>
-        <arrival-date>09-27-2024</arrival-date>
-        <departure-time>06:00 PM</departure-time>
-        <arrival-time>08:00 PM</arrival-time>
-        <available-seats>42</available-seats>
-        <price>183</price>
-    </flight>
-    <flight>
-        <flight-id>CA130</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Austin</destination>
-        <departure-date>10-22-2024</departure-date>
-        <arrival-date>10-22-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>44</available-seats>
-        <price>201</price>
-    </flight>
-    <flight>
-        <flight-id>TX131</flight-id>
-        <origin>Houston</origin>
-        <destination>Los Angeles</destination>
-        <departure-date>10-08-2024</departure-date>
-        <arrival-date>10-08-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>06:00 PM</arrival-time>
-        <available-seats>46</available-seats>
-        <price>186</price>
-    </flight>
-    <flight>
-        <flight-id>CA132</flight-id>
-        <origin>San Diego</origin>
-        <destination>Houston</destination>
-        <departure-date>10-10-2024</departure-date>
-        <arrival-date>10-10-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>30</available-seats>
-        <price>190</price>
-    </flight>
-    <flight>
-        <flight-id>TX133</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Francisco</destination>
-        <departure-date>10-17-2024</departure-date>
-        <arrival-date>10-17-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>45</available-seats>
-        <price>229</price>
-    </flight>
-    <flight>
-        <flight-id>CA134</flight-id>
-        <origin>Sacramento</origin>
-        <destination>San Antonio</destination>
-        <departure-date>11-26-2024</departure-date>
-        <arrival-date>11-26-2024</arrival-date>
-        <departure-time>08:00 AM</departure-time>
-        <arrival-time>10:00 AM</arrival-time>
-        <available-seats>44</available-seats>
-        <price>197</price>
-    </flight>
-    <flight>
-        <flight-id>TX135</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Diego</destination>
-        <departure-date>11-09-2024</departure-date>
-        <arrival-date>11-09-2024</arrival-date>
-        <departure-time>04:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>42</available-seats>
-        <price>212</price>
-    </flight>
-    <flight>
-        <flight-id>CA136</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Houston</destination>
-        <departure-date>10-06-2024</departure-date>
-        <arrival-date>10-06-2024</arrival-date>
-        <departure-time>12:00 PM</departure-time>
-        <arrival-time>04:00 PM</arrival-time>
-        <available-seats>48</available-seats>
-        <price>231</price>
-    </flight>
-    <flight>
-        <flight-id>TX137</flight-id>
-        <origin>Dallas</origin>
-        <destination>Sacramento</destination>
-        <departure-date>10-29-2024</departure-date>
-        <arrival-date>10-29-2024</arrival-date>
-        <departure-time>09:00 AM</departure-time>
-        <arrival-time>12:00 PM</arrival-time>
-        <available-seats>31</available-seats>
-        <price>156</price>
-    </flight>
-    <flight>
-        <flight-id>CA138</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Dallas</destination>
-        <departure-date>09-01-2024</departure-date>
-        <arrival-date>09-01-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>40</available-seats>
-        <price>237</price>
-    </flight>
-    <flight>
-        <flight-id>TX139</flight-id>
-        <origin>Austin</origin>
-        <destination>Oakland</destination>
-        <departure-date>11-23-2024</departure-date>
-        <arrival-date>11-23-2024</arrival-date>
-        <departure-time>02:00 PM</departure-time>
-        <arrival-time>05:00 PM</arrival-time>
-        <available-seats>38</available-seats>
-        <price>186</price>
-    </flight>
-    <flight>
-        <flight-id>CA140</flight-id>
-        <origin>Los Angeles</origin>
-        <destination>Dallas</destination>
-        <departure-date>10-06-2024</departure-date>
-        <arrival-date>10-06-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>08:00 PM</arrival-time>
-        <available-seats>43</available-seats>
-        <price>169</price>
-    </flight>
-    <flight>
-        <flight-id>TX141</flight-id>
-        <origin>Houston</origin>
-        <destination>San Diego</destination>
-        <departure-date>09-04-2024</departure-date>
-        <arrival-date>09-04-2024</arrival-date>
-        <departure-time>10:00 AM</departure-time>
-        <arrival-time>12:00 PM</arrival-time>
-        <available-seats>46</available-seats>
-        <price>206</price>
-    </flight>
-    <flight>
-        <flight-id>CA142</flight-id>
-        <origin>San Francisco</origin>
-        <destination>San Antonio</destination>
-        <departure-date>09-03-2024</departure-date>
-        <arrival-date>09-03-2024</arrival-date>
-        <departure-time>04:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>33</available-seats>
-        <price>183</price>
-    </flight>
-    <flight>
-        <flight-id>TX143</flight-id>
-        <origin>Dallas</origin>
-        <destination>Los Angeles</destination>
-        <departure-date>09-22-2024</departure-date>
-        <arrival-date>09-22-2024</arrival-date>
-        <departure-time>06:00 AM</departure-time>
-        <arrival-time>09:00 AM</arrival-time>
-        <available-seats>32</available-seats>
-        <price>188</price>
-    </flight>
-    <flight>
-        <flight-id>CA144</flight-id>
-        <origin>Sacramento</origin>
-        <destination>Houston</destination>
-        <departure-date>10-11-2024</departure-date>
-        <arrival-date>10-11-2024</arrival-date>
-        <departure-time>10:00 AM</departure-time>
-        <arrival-time>12:00 PM</arrival-time>
-        <available-seats>35</available-seats>
-        <price>156</price>
-    </flight>
-    <flight>
-        <flight-id>TX145</flight-id>
-        <origin>El Paso</origin>
-        <destination>San Diego</destination>
-        <departure-date>11-14-2024</departure-date>
-        <arrival-date>11-14-2024</arrival-date>
-        <departure-time>12:00 PM</departure-time>
-        <arrival-time>03:00 PM</arrival-time>
-        <available-seats>47</available-seats>
-        <price>192</price>
-    </flight>
-    <flight>
-        <flight-id>CA146</flight-id>
-        <origin>Sacramento</origin>
-        <destination>Houston</destination>
-        <departure-date>11-24-2024</departure-date>
-        <arrival-date>11-24-2024</arrival-date>
-        <departure-time>06:00 AM</departure-time>
-        <arrival-time>08:00 AM</arrival-time>
-        <available-seats>44</available-seats>
-        <price>162</price>
-    </flight>
-    <flight>
-        <flight-id>TX147</flight-id>
-        <origin>El Paso</origin>
-        <destination>Sacramento</destination>
-        <departure-date>09-21-2024</departure-date>
-        <arrival-date>09-21-2024</arrival-date>
-        <departure-time>12:00 PM</departure-time>
-        <arrival-time>03:00 PM</arrival-time>
-        <available-seats>35</available-seats>
-        <price>201</price>
-    </flight>
-    <flight>
-        <flight-id>CA148</flight-id>
-        <origin>San Francisco</origin>
-        <destination>Austin</destination>
-        <departure-date>10-13-2024</departure-date>
-        <arrival-date>10-13-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>08:00 PM</arrival-time>
-        <available-seats>39</available-seats>
-        <price>213</price>
-    </flight>
-    <flight>
-        <flight-id>TX149</flight-id>
-        <origin>Dallas</origin>
-        <destination>San Francisco</destination>
-        <departure-date>09-05-2024</departure-date>
-        <arrival-date>09-05-2024</arrival-date>
-        <departure-time>05:00 PM</departure-time>
-        <arrival-time>08:00 PM</arrival-time>
-        <available-seats>38</available-seats>
-        <price>194</price>
-    </flight>
-    <flight>
-        <flight-id>CA150</flight-id>
-        <origin>Sacramento</origin>
-        <destination>El Paso</destination>
-        <departure-date>11-03-2024</departure-date>
-        <arrival-date>11-03-2024</arrival-date>
-        <departure-time>11:00 AM</departure-time>
-        <arrival-time>01:00 PM</arrival-time>
-        <available-seats>38</available-seats>
-        <price>243</price>
-    </flight>
-    <flight>
-        <flight-id>CA205</flight-id>
-        <origin>Sacramento</origin>
-        <destination>Houston</destination>
-        <departure-date>09-14-2024</departure-date>
-        <arrival-date>09-14-2024</arrival-date>
-        <departure-time>03:00 PM</departure-time>
-        <arrival-time>07:00 PM</arrival-time>
-        <available-seats>35</available-seats>
-        <price>155</price>
-    </flight>
+  <flight>
+    <flight-id>TX101</flight-id>
+    <origin>Houston</origin>
+    <destination>Los Angeles</destination>
+    <departure-date>11-13-2024</departure-date>
+    <arrival-date>11-13-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>02:00 PM</arrival-time>
+    <available-seats>46</available-seats>
+    <price>212</price>
+  </flight>
+  <flight>
+    <flight-id>CA102</flight-id>
+    <origin>San Diego</origin>
+    <destination>Dallas</destination>
+    <departure-date>11-04-2024</departure-date>
+    <arrival-date>11-04-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>49</available-seats>
+    <price>233</price>
+  </flight>
+  <flight>
+    <flight-id>TX103</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Francisco</destination>
+    <departure-date>09-01-2024</departure-date>
+    <arrival-date>09-01-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>48</available-seats>
+    <price>220</price>
+  </flight>
+  <flight>
+    <flight-id>CA104</flight-id>
+    <origin>Oakland</origin>
+    <destination>Dallas</destination>
+    <departure-date>09-07-2024</departure-date>
+    <arrival-date>09-07-2024</arrival-date>
+    <departure-time>10:00 AM</departure-time>
+    <arrival-time>02:00 PM</arrival-time>
+    <available-seats>46</available-seats>
+    <price>161</price>
+  </flight>
+  <flight>
+    <flight-id>TX105</flight-id>
+    <origin>Austin</origin>
+    <destination>San Francisco</destination>
+    <departure-date>11-15-2024</departure-date>
+    <arrival-date>11-15-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>38</available-seats>
+    <price>203</price>
+  </flight>
+  <flight>
+    <flight-id>CA106</flight-id>
+    <origin>Oakland</origin>
+    <destination>El Paso</destination>
+    <departure-date>09-01-2024</departure-date>
+    <arrival-date>09-01-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>45</available-seats>
+    <price>160</price>
+  </flight>
+  <flight>
+    <flight-id>TX107</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Francisco</destination>
+    <departure-date>09-20-2024</departure-date>
+    <arrival-date>09-20-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>04:00 PM</arrival-time>
+    <available-seats>48</available-seats>
+    <price>186</price>
+  </flight>
+  <flight>
+    <flight-id>CA108</flight-id>
+    <origin>San Francisco</origin>
+    <destination>Houston</destination>
+    <departure-date>09-04-2024</departure-date>
+    <arrival-date>09-04-2024</arrival-date>
+    <departure-time>10:00 AM</departure-time>
+    <arrival-time>12:00 PM</arrival-time>
+    <available-seats>43</available-seats>
+    <price>234</price>
+  </flight>
+  <flight>
+    <flight-id>TX109</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Diego</destination>
+    <departure-date>09-28-2024</departure-date>
+    <arrival-date>09-28-2024</arrival-date>
+    <departure-time>08:00 AM</departure-time>
+    <arrival-time>11:00 AM</arrival-time>
+    <available-seats>41</available-seats>
+    <price>235</price>
+  </flight>
+  <flight>
+    <flight-id>CA110</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Austin</destination>
+    <departure-date>09-11-2024</departure-date>
+    <arrival-date>09-11-2024</arrival-date>
+    <departure-time>09:00 AM</departure-time>
+    <arrival-time>11:00 AM</arrival-time>
+    <available-seats>38</available-seats>
+    <price>236</price>
+  </flight>
+  <flight>
+    <flight-id>TX111</flight-id>
+    <origin>Dallas</origin>
+    <destination>Sacramento</destination>
+    <departure-date>10-06-2024</departure-date>
+    <arrival-date>10-06-2024</arrival-date>
+    <departure-time>06:00 PM</departure-time>
+    <arrival-time>10:00 PM</arrival-time>
+    <available-seats>49</available-seats>
+    <price>162</price>
+  </flight>
+  <flight>
+    <flight-id>CA112</flight-id>
+    <origin>Oakland</origin>
+    <destination>Houston</destination>
+    <departure-date>11-14-2024</departure-date>
+    <arrival-date>11-14-2024</arrival-date>
+    <departure-time>01:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>36</available-seats>
+    <price>175</price>
+  </flight>
+  <flight>
+    <flight-id>TX113</flight-id>
+    <origin>El Paso</origin>
+    <destination>Sacramento</destination>
+    <departure-date>10-03-2024</departure-date>
+    <arrival-date>10-03-2024</arrival-date>
+    <departure-time>01:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>40</available-seats>
+    <price>185</price>
+  </flight>
+  <flight>
+    <flight-id>CA114</flight-id>
+    <origin>San Francisco</origin>
+    <destination>San Antonio</destination>
+    <departure-date>09-11-2024</departure-date>
+    <arrival-date>09-11-2024</arrival-date>
+    <departure-time>01:00 PM</departure-time>
+    <arrival-time>04:00 PM</arrival-time>
+    <available-seats>33</available-seats>
+    <price>238</price>
+  </flight>
+  <flight>
+    <flight-id>TX115</flight-id>
+    <origin>Austin</origin>
+    <destination>San Diego</destination>
+    <departure-date>09-25-2024</departure-date>
+    <arrival-date>09-25-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>40</available-seats>
+    <price>159</price>
+  </flight>
+  <flight>
+    <flight-id>CA116</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Dallas</destination>
+    <departure-date>10-29-2024</departure-date>
+    <arrival-date>10-29-2024</arrival-date>
+    <departure-time>03:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>41</available-seats>
+    <price>227</price>
+  </flight>
+  <flight>
+    <flight-id>TX117</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Francisco</destination>
+    <departure-date>09-09-2024</departure-date>
+    <arrival-date>09-09-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>03:00 PM</arrival-time>
+    <available-seats>37</available-seats>
+    <price>239</price>
+  </flight>
+  <flight>
+    <flight-id>CA118</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>El Paso</destination>
+    <departure-date>09-03-2024</departure-date>
+    <arrival-date>09-03-2024</arrival-date>
+    <departure-time>09:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>50</available-seats>
+    <price>191</price>
+  </flight>
+  <flight>
+    <flight-id>TX119</flight-id>
+    <origin>San Antonio</origin>
+    <destination>San Diego</destination>
+    <departure-date>10-04-2024</departure-date>
+    <arrival-date>10-04-2024</arrival-date>
+    <departure-time>06:00 PM</departure-time>
+    <arrival-time>10:00 PM</arrival-time>
+    <available-seats>36</available-seats>
+    <price>199</price>
+  </flight>
+  <flight>
+    <flight-id>CA120</flight-id>
+    <origin>San Diego</origin>
+    <destination>Houston</destination>
+    <departure-date>09-10-2024</departure-date>
+    <arrival-date>09-10-2024</arrival-date>
+    <departure-time>12:00 PM</departure-time>
+    <arrival-time>03:00 PM</arrival-time>
+    <available-seats>50</available-seats>
+    <price>193</price>
+  </flight>
+  <flight>
+    <flight-id>TX121</flight-id>
+    <origin>San Antonio</origin>
+    <destination>Oakland</destination>
+    <departure-date>11-25-2024</departure-date>
+    <arrival-date>11-25-2024</arrival-date>
+    <departure-time>09:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>44</available-seats>
+    <price>250</price>
+  </flight>
+  <flight>
+    <flight-id>CA122</flight-id>
+    <origin>Sacramento</origin>
+    <destination>Dallas</destination>
+    <departure-date>09-13-2024</departure-date>
+    <arrival-date>09-13-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>31</available-seats>
+    <price>167</price>
+  </flight>
+  <flight>
+    <flight-id>TX123</flight-id>
+    <origin>Dallas</origin>
+    <destination>Sacramento</destination>
+    <departure-date>09-20-2024</departure-date>
+    <arrival-date>09-20-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>09:00 PM</arrival-time>
+    <available-seats>46</available-seats>
+    <price>245</price>
+  </flight>
+  <flight>
+    <flight-id>CA124</flight-id>
+    <origin>Sacramento</origin>
+    <destination>San Antonio</destination>
+    <departure-date>10-25-2024</departure-date>
+    <arrival-date>10-25-2024</arrival-date>
+    <departure-time>06:00 PM</departure-time>
+    <arrival-time>10:00 PM</arrival-time>
+    <available-seats>42</available-seats>
+    <price>237</price>
+  </flight>
+  <flight>
+    <flight-id>TX125</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Diego</destination>
+    <departure-date>09-26-2024</departure-date>
+    <arrival-date>09-26-2024</arrival-date>
+    <departure-time>07:00 AM</departure-time>
+    <arrival-time>10:00 AM</arrival-time>
+    <available-seats>39</available-seats>
+    <price>204</price>
+  </flight>
+  <flight>
+    <flight-id>CA126</flight-id>
+    <origin>San Francisco</origin>
+    <destination>Houston</destination>
+    <departure-date>09-05-2024</departure-date>
+    <arrival-date>09-05-2024</arrival-date>
+    <departure-time>01:00 PM</departure-time>
+    <arrival-time>03:00 PM</arrival-time>
+    <available-seats>47</available-seats>
+    <price>238</price>
+  </flight>
+  <flight>
+    <flight-id>TX127</flight-id>
+    <origin>Austin</origin>
+    <destination>San Diego</destination>
+    <departure-date>11-04-2024</departure-date>
+    <arrival-date>11-04-2024</arrival-date>
+    <departure-time>09:00 AM</departure-time>
+    <arrival-time>12:00 PM</arrival-time>
+    <available-seats>33</available-seats>
+    <price>177</price>
+  </flight>
+  <flight>
+    <flight-id>CA128</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>El Paso</destination>
+    <departure-date>09-20-2024</departure-date>
+    <arrival-date>09-20-2024</arrival-date>
+    <departure-time>03:00 PM</departure-time>
+    <arrival-time>06:00 PM</arrival-time>
+    <available-seats>35</available-seats>
+    <price>173</price>
+  </flight>
+  <flight>
+    <flight-id>TX129</flight-id>
+    <origin>Dallas</origin>
+    <destination>Sacramento</destination>
+    <departure-date>09-27-2024</departure-date>
+    <arrival-date>09-27-2024</arrival-date>
+    <departure-time>06:00 PM</departure-time>
+    <arrival-time>08:00 PM</arrival-time>
+    <available-seats>42</available-seats>
+    <price>183</price>
+  </flight>
+  <flight>
+    <flight-id>CA130</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Austin</destination>
+    <departure-date>10-22-2024</departure-date>
+    <arrival-date>10-22-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>44</available-seats>
+    <price>201</price>
+  </flight>
+  <flight>
+    <flight-id>TX131</flight-id>
+    <origin>Houston</origin>
+    <destination>Los Angeles</destination>
+    <departure-date>10-08-2024</departure-date>
+    <arrival-date>10-08-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>06:00 PM</arrival-time>
+    <available-seats>46</available-seats>
+    <price>186</price>
+  </flight>
+  <flight>
+    <flight-id>CA132</flight-id>
+    <origin>San Diego</origin>
+    <destination>Houston</destination>
+    <departure-date>10-10-2024</departure-date>
+    <arrival-date>10-10-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>30</available-seats>
+    <price>190</price>
+  </flight>
+  <flight>
+    <flight-id>TX133</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Francisco</destination>
+    <departure-date>10-17-2024</departure-date>
+    <arrival-date>10-17-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>45</available-seats>
+    <price>229</price>
+  </flight>
+  <flight>
+    <flight-id>CA134</flight-id>
+    <origin>Sacramento</origin>
+    <destination>San Antonio</destination>
+    <departure-date>11-26-2024</departure-date>
+    <arrival-date>11-26-2024</arrival-date>
+    <departure-time>08:00 AM</departure-time>
+    <arrival-time>10:00 AM</arrival-time>
+    <available-seats>44</available-seats>
+    <price>197</price>
+  </flight>
+  <flight>
+    <flight-id>TX135</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Diego</destination>
+    <departure-date>11-09-2024</departure-date>
+    <arrival-date>11-09-2024</arrival-date>
+    <departure-time>04:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>42</available-seats>
+    <price>212</price>
+  </flight>
+  <flight>
+    <flight-id>CA136</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Houston</destination>
+    <departure-date>10-06-2024</departure-date>
+    <arrival-date>10-06-2024</arrival-date>
+    <departure-time>12:00 PM</departure-time>
+    <arrival-time>04:00 PM</arrival-time>
+    <available-seats>48</available-seats>
+    <price>231</price>
+  </flight>
+  <flight>
+    <flight-id>TX137</flight-id>
+    <origin>Dallas</origin>
+    <destination>Sacramento</destination>
+    <departure-date>10-29-2024</departure-date>
+    <arrival-date>10-29-2024</arrival-date>
+    <departure-time>09:00 AM</departure-time>
+    <arrival-time>12:00 PM</arrival-time>
+    <available-seats>31</available-seats>
+    <price>156</price>
+  </flight>
+  <flight>
+    <flight-id>CA138</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Dallas</destination>
+    <departure-date>09-01-2024</departure-date>
+    <arrival-date>09-01-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>40</available-seats>
+    <price>237</price>
+  </flight>
+  <flight>
+    <flight-id>TX139</flight-id>
+    <origin>Austin</origin>
+    <destination>Oakland</destination>
+    <departure-date>11-23-2024</departure-date>
+    <arrival-date>11-23-2024</arrival-date>
+    <departure-time>02:00 PM</departure-time>
+    <arrival-time>05:00 PM</arrival-time>
+    <available-seats>38</available-seats>
+    <price>186</price>
+  </flight>
+  <flight>
+    <flight-id>CA140</flight-id>
+    <origin>Los Angeles</origin>
+    <destination>Dallas</destination>
+    <departure-date>10-06-2024</departure-date>
+    <arrival-date>10-06-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>08:00 PM</arrival-time>
+    <available-seats>43</available-seats>
+    <price>169</price>
+  </flight>
+  <flight>
+    <flight-id>TX141</flight-id>
+    <origin>Houston</origin>
+    <destination>San Diego</destination>
+    <departure-date>09-04-2024</departure-date>
+    <arrival-date>09-04-2024</arrival-date>
+    <departure-time>10:00 AM</departure-time>
+    <arrival-time>12:00 PM</arrival-time>
+    <available-seats>46</available-seats>
+    <price>206</price>
+  </flight>
+  <flight>
+    <flight-id>CA142</flight-id>
+    <origin>San Francisco</origin>
+    <destination>San Antonio</destination>
+    <departure-date>09-03-2024</departure-date>
+    <arrival-date>09-03-2024</arrival-date>
+    <departure-time>04:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>33</available-seats>
+    <price>183</price>
+  </flight>
+  <flight>
+    <flight-id>TX143</flight-id>
+    <origin>Dallas</origin>
+    <destination>Los Angeles</destination>
+    <departure-date>09-22-2024</departure-date>
+    <arrival-date>09-22-2024</arrival-date>
+    <departure-time>06:00 AM</departure-time>
+    <arrival-time>09:00 AM</arrival-time>
+    <available-seats>32</available-seats>
+    <price>188</price>
+  </flight>
+  <flight>
+    <flight-id>CA144</flight-id>
+    <origin>Sacramento</origin>
+    <destination>Houston</destination>
+    <departure-date>10-11-2024</departure-date>
+    <arrival-date>10-11-2024</arrival-date>
+    <departure-time>10:00 AM</departure-time>
+    <arrival-time>12:00 PM</arrival-time>
+    <available-seats>35</available-seats>
+    <price>156</price>
+  </flight>
+  <flight>
+    <flight-id>TX145</flight-id>
+    <origin>El Paso</origin>
+    <destination>San Diego</destination>
+    <departure-date>11-14-2024</departure-date>
+    <arrival-date>11-14-2024</arrival-date>
+    <departure-time>12:00 PM</departure-time>
+    <arrival-time>03:00 PM</arrival-time>
+    <available-seats>47</available-seats>
+    <price>192</price>
+  </flight>
+  <flight>
+    <flight-id>CA146</flight-id>
+    <origin>Sacramento</origin>
+    <destination>Houston</destination>
+    <departure-date>11-24-2024</departure-date>
+    <arrival-date>11-24-2024</arrival-date>
+    <departure-time>06:00 AM</departure-time>
+    <arrival-time>08:00 AM</arrival-time>
+    <available-seats>44</available-seats>
+    <price>162</price>
+  </flight>
+  <flight>
+    <flight-id>TX147</flight-id>
+    <origin>El Paso</origin>
+    <destination>Sacramento</destination>
+    <departure-date>09-21-2024</departure-date>
+    <arrival-date>09-21-2024</arrival-date>
+    <departure-time>12:00 PM</departure-time>
+    <arrival-time>03:00 PM</arrival-time>
+    <available-seats>35</available-seats>
+    <price>201</price>
+  </flight>
+  <flight>
+    <flight-id>CA148</flight-id>
+    <origin>San Francisco</origin>
+    <destination>Austin</destination>
+    <departure-date>10-13-2024</departure-date>
+    <arrival-date>10-13-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>08:00 PM</arrival-time>
+    <available-seats>39</available-seats>
+    <price>213</price>
+  </flight>
+  <flight>
+    <flight-id>TX149</flight-id>
+    <origin>Dallas</origin>
+    <destination>San Francisco</destination>
+    <departure-date>09-05-2024</departure-date>
+    <arrival-date>09-05-2024</arrival-date>
+    <departure-time>05:00 PM</departure-time>
+    <arrival-time>08:00 PM</arrival-time>
+    <available-seats>38</available-seats>
+    <price>194</price>
+  </flight>
+  <flight>
+    <flight-id>CA150</flight-id>
+    <origin>Sacramento</origin>
+    <destination>El Paso</destination>
+    <departure-date>11-03-2024</departure-date>
+    <arrival-date>11-03-2024</arrival-date>
+    <departure-time>11:00 AM</departure-time>
+    <arrival-time>01:00 PM</arrival-time>
+    <available-seats>38</available-seats>
+    <price>243</price>
+  </flight>
+  <flight>
+    <flight-id>CA205</flight-id>
+    <origin>Sacramento</origin>
+    <destination>Houston</destination>
+    <departure-date>09-14-2024</departure-date>
+    <arrival-date>09-14-2024</arrival-date>
+    <departure-time>03:00 PM</departure-time>
+    <arrival-time>07:00 PM</arrival-time>
+    <available-seats>35</available-seats>
+    <price>155</price>
+  </flight>
 </flights>
