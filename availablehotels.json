@@ -1,0 +1,165 @@
+{
+    "hotels": [
+      {
+        "hotel-id": "1",
+        "hotel-name": "The Magnolia Hotel",
+        "city": "Austin",
+        "available-rooms": 12,
+        "date": "2024-09-15",
+        "price-per-night": 220
+      },
+      {
+        "hotel-id": "2",
+        "hotel-name": "Luxe Downtown",
+        "city": "Dallas",
+        "available-rooms": 8,
+        "date": "2024-09-20",
+        "price-per-night": 180
+      },
+      {
+        "hotel-id": "3",
+        "hotel-name": "Ocean View Resort",
+        "city": "San Diego",
+        "available-rooms": 10,
+        "date": "2024-09-25",
+        "price-per-night": 350
+      },
+      {
+        "hotel-id": "4",
+        "hotel-name": "River Walk Hotel",
+        "city": "San Antonio",
+        "available-rooms": 15,
+        "date": "2024-09-30",
+        "price-per-night": 230
+      },
+      {
+        "hotel-id": "5",
+        "hotel-name": "Golden Gate Hotel",
+        "city": "San Francisco",
+        "available-rooms": 7,
+        "date": "2024-10-01",
+        "price-per-night": 290
+      },
+      {
+        "hotel-id": "6",
+        "hotel-name": "Palm Springs Oasis",
+        "city": "Palm Springs",
+        "available-rooms": 20,
+        "date": "2024-10-05",
+        "price-per-night": 260
+      },
+      {
+        "hotel-id": "7",
+        "hotel-name": "The Westin Downtown",
+        "city": "Houston",
+        "available-rooms": 5,
+        "date": "2024-10-10",
+        "price-per-night": 240
+      },
+      {
+        "hotel-id": "8",
+        "hotel-name": "Santa Monica Retreat",
+        "city": "Santa Monica",
+        "available-rooms": 12,
+        "date": "2024-10-15",
+        "price-per-night": 320
+      },
+      {
+        "hotel-id": "9",
+        "hotel-name": "The Ritz San Francisco",
+        "city": "San Francisco",
+        "available-rooms": 8,
+        "date": "2024-10-20",
+        "price-per-night": 450
+      },
+      {
+        "hotel-id": "10",
+        "hotel-name": "Dallas Grand Hotel",
+        "city": "Dallas",
+        "available-rooms": 10,
+        "date": "2024-10-25",
+        "price-per-night": 210
+      },
+      {
+        "hotel-id": "11",
+        "hotel-name": "Carmel Valley Inn",
+        "city": "Carmel",
+        "available-rooms": 6,
+        "date": "2024-11-01",
+        "price-per-night": 380
+      },
+      {
+        "hotel-id": "12",
+        "hotel-name": "Hollywood Heights",
+        "city": "Los Angeles",
+        "available-rooms": 14,
+        "date": "2024-11-05",
+        "price-per-night": 280
+      },
+      {
+        "hotel-id": "13",
+        "hotel-name": "Houston Towers",
+        "city": "Houston",
+        "available-rooms": 13,
+        "date": "2024-11-10",
+        "price-per-night": 220
+      },
+      {
+        "hotel-id": "14",
+        "hotel-name": "Napa Valley Vineyards",
+        "city": "Napa",
+        "available-rooms": 9,
+        "date": "2024-11-15",
+        "price-per-night": 310
+      },
+      {
+        "hotel-id": "15",
+        "hotel-name": "Monterey Bay Resort",
+        "city": "Monterey",
+        "available-rooms": 7,
+        "date": "2024-11-20",
+        "price-per-night": 330
+      },
+      {
+        "hotel-id": "16",
+        "hotel-name": "Downtown San Diego Inn",
+        "city": "San Diego",
+        "available-rooms": 11,
+        "date": "2024-11-25",
+        "price-per-night": 220
+      },
+      {
+        "hotel-id": "17",
+        "hotel-name": "The Fairmont Austin",
+        "city": "Austin",
+        "available-rooms": 10,
+        "date": "2024-12-01",
+        "price-per-night": 300
+      },
+      {
+        "hotel-id": "18",
+        "hotel-name": "Laguna Beach Resort",
+        "city": "Laguna Beach",
+        "available-rooms": 8,
+        "date": "2024-12-05",
+        "price-per-night": 370
+      },
+      {
+        "hotel-id": "19",
+        "hotel-name": "The Beverly Hills Hotel",
+        "city": "Los Angeles",
+        "available-rooms": 6,
+        "date": "2024-12-10",
+        "price-per-night": 600
+      },
+      {
+        "hotel-id": "20",
+        "hotel-name": "The W Dallas Victory",
+        "city": "Dallas",
+        "available-rooms": 15,
+        "date": "2024-12-15",
+        "price-per-night": 270
+      }
+    ]
+  }
+  

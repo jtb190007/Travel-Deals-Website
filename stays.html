@@ -88,6 +88,8 @@
 <div class="footer">
 <h3>Search Results:</h3>
 <p id="results">None</p>
+<h3>Available Hotels:</h3>
+<p id="hotelResults"></p>
 </div>
 
 <h3>Below are contributors:</h3>
@@ -211,6 +213,54 @@
 			}
 			currCities.selectedIndex = 0;
 		}
+	}
+
+	function searchHotels() {
+		var city = document.getElementById('cities').value;
+		var checkin = document.getElementById('checkin').value;
+		var checkout = document.getElementById('checkout').value;
+		var adults = document.getElementById("adults").value;
+		var children = document.getElementById("children").value;
+		var infants = document.getElementById("infants").value;
+
+		if (!city || city === "Please choose a City") {
+        	alert("Please select a city");
+        	return;
+    	}
+
+		var data = {
+			city: city,
+			checkin: checkin,
+			checkout: checkout,
+			adults: adults,
+			children: children,
+			infants: infants
+		};
+		console.log(data);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'search-hotels.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				document.getElementById('hotelResults').innerHTML = xhr.responseText;
+			}
+		};
+		xhr.send('data=' + JSON.stringify(data));
+	}
+
+	function addToCart(hotelId, hotelName, price, rooms, checkin, checkout) {
+		var cart = {
+			hotelId: hotelId,
+			hotelName: hotelName,
+			price: price,
+			rooms: rooms,
+			checkin: checkin,
+			checkout: checkout
+		};
+
+		localStorage.setItem('cart', JSON.stringify(cart));
+		window.location.href = 'cart.html';
 	}
 </script>
 

@@ -48,6 +48,9 @@
                 <h2>Booking Confirmation</h2>
                 <p id="confirmationDetails"></p>
             </div>
+            <h3>Cart:</h3>
+            <div id="cartDetails"></div>
+            <button id="bookButton" onclick="bookHotel()">Confirm Booking</button>
         </div>
     </div>
 
@@ -225,7 +228,54 @@ function showBookingConfirmation(flight, remainingSeats) {
     alert("Booking confirmed! Details are displayed below.");
 }
 
+function displayCart() {
+        var cart = JSON.parse(localStorage.getItem('cart'));
 
+        if (cart) {
+            var cartDetails = `
+                <h2>Hotel: ${cart.hotelName}</h2>
+                <p>Price: $${cart.price} per night</p>
+                <p>Check-in: ${cart.checkin}</p>
+                <p>Check-out: ${cart.checkout}</p>
+                <p>Rooms: ${cart.rooms}</p>
+            `;
+            document.getElementById('cartDetails').innerHTML = cartDetails;
+        } else {
+            document.getElementById('cartDetails').innerHTML = '<p>Your cart is empty.</p>';
+        }
+    }
+
+    function bookHotel() {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+
+        if (!cart) {
+            alert('No hotel selected!');
+            return;
+        }
+
+        var data = {
+            hotelId: cart.hotelId,
+            hotelName: cart.hotelName,
+            price: cart.price,
+            rooms: cart.rooms,
+            checkin: cart.checkin,
+            checkout: cart.checkout
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'book-hotel.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Booking successful!');
+                localStorage.removeItem('cart');
+                window.location.href = 'stays.html';
+            }
+        };
+        xhr.send('data=' + JSON.stringify(data));
+    }
+
+    displayCart();
     </script>
 
 
