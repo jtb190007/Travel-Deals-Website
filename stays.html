@@ -20,6 +20,7 @@
 <li><a href="stays.html">Stays</a></li>
 <li><a href="car.html">Car</a></li>
 <li><a href="cruises.html">Cruise</a></li>
+<li><a href="cart.html">Cart</a></li>
 </ul>
 </div>
 
@@ -71,7 +72,7 @@
 	<label for="infants">Infants:</label>
 	<input type="number" id="infants" name="infants" min="0" max="4" required>
 	<br/>
-	<input type="submit" value="Search" onclick="searchHotels()">
+	<input type="submit" value="Search">
 
 </form>
 
@@ -113,6 +114,7 @@
 	}
 
 	function validateStaysForm() {
+		var city = document.getElementById('cities').value;
 		var adults = document.getElementById("adults").value;
 		var children = document.getElementById("children").value;
 		var infants = document.getElementById("infants").value;
@@ -182,6 +184,7 @@
 		} else {
 			alert("Form submitted successfully!");
 			searchResults();
+			fetchHotels(city, checkin, checkout, adults, children, infants);
 		}
 		return false;
 	}
@@ -215,6 +218,7 @@
 		}
 	}
 
+	/*
 	function searchHotels() {
 		var city = document.getElementById('cities').value;
 		var checkin = document.getElementById('checkin').value;
@@ -262,6 +266,66 @@
 		localStorage.setItem('cart', JSON.stringify(cart));
 		window.location.href = 'cart.html';
 	}
+	*/
+
+	function fetchHotels(city, checkin, checkout, adults, children, infants) {
+
+  		fetch('availablehotels.json')
+    		.then(response => response.json())
+    		.then(data => {
+      			let hotels = data.hotels;
+      			let availableHotels = hotels.filter(hotel => 
+        			hotel.city === city && 
+        			hotel["available-rooms"] > 0 && 
+        			new Date(hotel.date) >= new Date(checkin) && 
+        			new Date(hotel.date) <= new Date(checkout)
+      		);
+      	displayHotelResults(availableHotels);
+    	})
+	}
+
+	function displayHotelResults(hotels) {
+  		let resultsDiv = document.getElementById('hotelResults');
+  		resultsDiv.innerHTML = '';
+
+  		hotels.forEach(hotel => {
+    		let hotelDiv = document.createElement('div');
+    		hotelDiv.classList.add('hotel');
+
+    		hotelDiv.innerHTML = `
+      			<p>Hotel Name: ${hotel['hotel-name']}</p>
+      			<p>City: ${hotel.city}</p>
+      			<p>Price per Night: $${hotel['price-per-night']}</p>
+      			<p><button onclick="addToCart(${hotel['hotel-id']})">Add to Cart</button></p>
+    			`;
+    		resultsDiv.appendChild(hotelDiv);
+  		});
+	}
+
+	let selectedHotel = null;
+
+	function addToCart(hotelId) {
+		let hotels = data.hotels;
+  		selectedHotel = hotels.find(hotel => hotel['hotel-id'] === hotelId);
+  		displayCartDetails(selectedHotel);
+	}
+
+	document.getElementById('book-button').addEventListener('click', function () {
+  		const bookingData = {
+    		hotel: selectedHotel,
+    		checkin: document.getElementById('checkin').value,
+    		checkout: document.getElementById('checkout').value,
+    		rooms: parseInt(prompt("Enter number of rooms", "1"), 10)
+  	};
+
+  	let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+  	bookings.push(bookingData);
+  	localStorage.setItem('bookings', JSON.stringify(bookings));
+
+  	selectedHotel[available-rooms] -= bookingData.rooms;
+
+  	alert('Booking confirmed!');
+	});
 </script>
 
 </html>
