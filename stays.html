@@ -218,58 +218,9 @@
 		}
 	}
 
-	/*
-	function searchHotels() {
-		var city = document.getElementById('cities').value;
-		var checkin = document.getElementById('checkin').value;
-		var checkout = document.getElementById('checkout').value;
-		var adults = document.getElementById("adults").value;
-		var children = document.getElementById("children").value;
-		var infants = document.getElementById("infants").value;
-
-		if (!city || city === "Please choose a City") {
-        	alert("Please select a city");
-        	return;
-    	}
-
-		var data = {
-			city: city,
-			checkin: checkin,
-			checkout: checkout,
-			adults: adults,
-			children: children,
-			infants: infants
-		};
-		console.log(data);
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'search-hotels.php', true);
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.onload = function() {
-			if (xhr.status === 200) {
-				document.getElementById('hotelResults').innerHTML = xhr.responseText;
-			}
-		};
-		xhr.send('data=' + JSON.stringify(data));
-	}
-
-	function addToCart(hotelId, hotelName, price, rooms, checkin, checkout) {
-		var cart = {
-			hotelId: hotelId,
-			hotelName: hotelName,
-			price: price,
-			rooms: rooms,
-			checkin: checkin,
-			checkout: checkout
-		};
-
-		localStorage.setItem('cart', JSON.stringify(cart));
-		window.location.href = 'cart.html';
-	}
-	*/
+	let availableHotels = [];
 
 	function fetchHotels(city, checkin, checkout, adults, children, infants) {
-
   		fetch('availablehotels.json')
     		.then(response => response.json())
     		.then(data => {
@@ -296,36 +247,20 @@
       			<p>Hotel Name: ${hotel['hotel-name']}</p>
       			<p>City: ${hotel.city}</p>
       			<p>Price per Night: $${hotel['price-per-night']}</p>
-      			<p><button onclick="addToCart(${hotel['hotel-id']})">Add to Cart</button></p>
+      			<p><button onclick="addHotelToCart(${hotel['hotel-id']})">Add to Cart</button></p>
+				<p><button onclick="handleBooking(${hotel['hotel-id']})">Book Now</button></p>
     			`;
     		resultsDiv.appendChild(hotelDiv);
   		});
+
+		document.querySelectorAll('.book-button').forEach(button => {
+        	button.addEventListener('click', function() {
+            	const hotelId = button.getAttribute('hotel-id');
+            	handleBooking(hotelId);
+        	});
+    	});
 	}
 
-	let selectedHotel = null;
-
-	function addToCart(hotelId) {
-		let hotels = data.hotels;
-  		selectedHotel = hotels.find(hotel => hotel['hotel-id'] === hotelId);
-  		displayCartDetails(selectedHotel);
-	}
-
-	document.getElementById('book-button').addEventListener('click', function () {
-  		const bookingData = {
-    		hotel: selectedHotel,
-    		checkin: document.getElementById('checkin').value,
-    		checkout: document.getElementById('checkout').value,
-    		rooms: parseInt(prompt("Enter number of rooms", "1"), 10)
-  	};
-
-  	let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-  	bookings.push(bookingData);
-  	localStorage.setItem('bookings', JSON.stringify(bookings));
-
-  	selectedHotel[available-rooms] -= bookingData.rooms;
-
-  	alert('Booking confirmed!');
-	});
 </script>
 
 </html>

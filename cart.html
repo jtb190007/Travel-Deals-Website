@@ -49,9 +49,6 @@
                 <h2>Booking Confirmation</h2>
                 <p id="confirmationDetails"></p>
             </div>
-            <h3>Cart:</h3>
-            <div id="cartDetails"></div>
-            <button id="bookButton" onclick="bookHotel()">Confirm Booking</button>
         </div>
     </div>
 
@@ -70,8 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Retrieved selected flight from localStorage:", selectedFlight);
 
     if (!selectedFlight) {
-        alert("No flight selected. Redirecting to the search page.");
-        window.location.href = "flight.html";
+        //alert("No flight selected. Redirecting to the search page.");
+        //window.location.href = "flight.html";
         return;
     }
 
@@ -82,8 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Parsed pricePerAdult:", pricePerAdult);
 
     if (availableSeats <= 0) {
-        alert("No seats are available for the selected flight.");
-        window.location.href = "flight.html";
+        //alert("No seats are available for the selected flight.");
+        //window.location.href = "flight.html";
         return;
     }
 
@@ -229,56 +226,27 @@ function showBookingConfirmation(flight, remainingSeats) {
     alert("Booking confirmed! Details are displayed below.");
 }
 
-function displayCart() {
-        var cart = JSON.parse(localStorage.getItem('cart'));
-
-        if (cart) {
-            var cartDetails = `
-                <h2>Hotel: ${cart.hotelName}</h2>
-                <p>Price: $${cart.price} per night</p>
-                <p>Check-in: ${cart.checkin}</p>
-                <p>Check-out: ${cart.checkout}</p>
-                <p>Rooms: ${cart.rooms}</p>
-            `;
-            document.getElementById('cartDetails').innerHTML = cartDetails;
-        } else {
-            document.getElementById('cartDetails').innerHTML = '<p>Your cart is empty.</p>';
-        }
-    }
-
-    function bookHotel() {
-        var cart = JSON.parse(localStorage.getItem('cart'));
-
-        if (!cart) {
-            alert('No hotel selected!');
+    function displayCart() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartResultsDiv = document.getElementById('cart-results');
+        if (cart.length === 0) {
+            cartResultsDiv.innerHTML = "<p>Your cart is empty.</p>";
             return;
         }
-
-        var data = {
-            hotelId: cart.hotelId,
-            hotelName: cart.hotelName,
-            price: cart.price,
-            rooms: cart.rooms,
-            checkin: cart.checkin,
-            checkout: cart.checkout
-        };
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'book-hotel.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                alert('Booking successful!');
-                localStorage.removeItem('cart');
-                window.location.href = 'stays.html';
-            }
-        };
-        xhr.send('data=' + JSON.stringify(data));
+        cartResultsDiv.innerHTML = '';
+        cart.forEach(hotel => {
+            const hotelDiv = document.createElement('div');
+            hotelDiv.classList.add('cart-item');
+            hotelDiv.innerHTML = `
+                <p><strong>${hotel['hotel-name']}</strong></p>
+                <p>City: ${hotel.city}</p>
+                <p>Price per Night: $${hotel['price-per-night']}</p>
+                <p>Available Rooms: ${hotel['available-rooms']}</p>
+            `;
+            cartResultsDiv.appendChild(hotelDiv);
+        });
     }
-
     displayCart();
     </script>
-
-
 </body>
 </html>

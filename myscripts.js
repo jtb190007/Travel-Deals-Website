@@ -40,3 +40,53 @@ function resetWeb() {
 	document.getElementsByClassName("main")[0].style.fontSize ="16px";
 	document.getElementsByClassName("main")[0].style.backgroundColor ="#ffffff";
 }
+
+function addHotelToCart(hotelId) {
+	const hotel = availableHotels.hotels.find(hotel => hotel['hotel-id'] === hotelId);
+	if (!hotel) {
+		alert('Hotel not found');
+		return;
+	}
+	let cart = JSON.parse(localStorage.getItem('cart')) || [];
+	cart.push(hotel);
+	localStorage.setItem('cart', JSON.stringify(cart));
+	alert('Hotel added to cart!');
+}
+
+function handleBooking(hotelId) {
+    let selectedHotel = availableHotels.hotels.find(hotel => hotel['hotel-id'] === parseInt(hotelId));
+
+    if (!selectedHotel) {
+        alert('No hotel selected for booking!');
+        return;
+    }
+
+    if (selectedHotel['available-rooms'] > 0) {
+        fetch("http://localhost/test/availablehotels", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                hotelId: selectedHotel['hotel-id'],
+                decrementBy: 1
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                selectedHotel['available-rooms'] -= 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert('Booking confirmed!');
+            } else {
+                alert('Failed to book the hotel.');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating available rooms:', error);
+            alert('Failed to book the hotel. Please try again.');
+        });
+    } else {
+        alert('No rooms available!');
+    }
+}
