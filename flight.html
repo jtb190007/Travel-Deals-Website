@@ -321,6 +321,7 @@
                     departureTime: flights[i].getElementsByTagName("departure-time")[0].childNodes[0].nodeValue,
                     arrivalDate: flights[i].getElementsByTagName("arrival-date")[0].childNodes[0].nodeValue,
                     arrivalTime: flights[i].getElementsByTagName("arrival-time")[0].childNodes[0].nodeValue,
+                    availableSeats: availableSeats,
                     price: flights[i].getElementsByTagName("price")[0].childNodes[0].nodeValue
                 })})'>Select Flight</button>
             </p>`;
