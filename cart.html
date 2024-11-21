@@ -50,7 +50,9 @@
                 <p id="confirmationDetails"></p>
             </div>
             <h3>Hotel Cart:</h3>
-            <button class="book-now" data-hotel-id="${hotel['hotel-id']}">Book Now</button>
+            <p id="cart-results"></p>
+            <button id="clearCartButton">Clear Hotel Cart</button>
+
         </div>
     </div>
 
@@ -229,49 +231,47 @@ function showBookingConfirmation(flight, remainingSeats) {
 }
 
 function handleBooking(hotelId) {
-	let selectedHotel = hotels.find(hotel => hotel['hotel-id'] === parseInt(hotelId));
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-	if (!selectedHotel) {
-		alert('No hotel selected for booking!');
-		return;
-	}
+    let selectedHotel = cart.find(hotel => hotel['hotel-id'] === parseInt(hotelId));
 
-	if (selectedHotel['available-rooms'] > 0) {
-		fetch("http://localhost:3000/updateAvailableRooms", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				hotelId: selectedHotel['hotel-id'],
-				decrementBy: 1
-			}),
-		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.success) {
-				selectedHotel['available-rooms'] -= 1;
-				localStorage.setItem('cart', JSON.stringify(cart));
-				alert('Booking confirmed!');
-			} else {
-				alert('Failed to book the hotel.');
-			}
-		})
-		.catch(error => {
-			console.error('Error updating available rooms:', error);
-			alert('Failed to book the hotel. Please try again.');
-		});
-	} else {
-		alert('No rooms available!');
-	}
+    if (!selectedHotel) {
+        alert('No hotel selected for booking!');
+        return;
+    }
+
+    if (selectedHotel['available-rooms'] > 0) {
+        fetch("http://localhost:3000/updateAvailableRooms", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                hotelId: selectedHotel['hotel-id'],
+                decrementBy: 1
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                selectedHotel['available-rooms'] -= 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                alert('Hotel booked successfully!');
+                displayCart();
+            } else {
+                alert('Failed to book the hotel.');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating available rooms:', error);
+            alert('Failed to book the hotel. Please try again.');
+        });
+    } else {
+        alert('No rooms available!');
+    }
 }
 
-document.querySelectorAll('.book-now').forEach(button => {
-        button.addEventListener('click', function() {
-            const hotelId = this.getAttribute('data-hotel-id');
-            handleBooking(hotelId);
-        });
-});
 
 function displayCart() {
 	let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -289,11 +289,23 @@ function displayCart() {
 			<p>City: ${hotel.city}</p>
 			<p>Price per Night: $${hotel['price-per-night']}</p>
 			<p>Available Rooms: ${hotel['available-rooms']}</p>
+            <button class="book-now" data-hotel-id="${hotel['hotel-id']}">Book Now</button>
 		`;
 		cartResultsDiv.appendChild(hotelDiv);
 	});
+    document.querySelectorAll('.book-now').forEach(button => {
+        button.addEventListener('click', function() {
+            const hotelId = this.getAttribute('data-hotel-id');
+            handleBooking(hotelId);
+        });
+    });
 }
+document.addEventListener('DOMContentLoaded', function() {
     displayCart();
+});
+document.getElementById('clearCartButton').addEventListener('click', function() {
+    localStorage.removeItem('cart');
+});
     </script>
 </body>
 </html>
