@@ -231,9 +231,15 @@ function showBookingConfirmation(flight, remainingSeats) {
 }
 
 function handleBooking(hotelId) {
+    console.log("Hotel ID passed to handleBooking:", hotelId);
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    let selectedHotel = cart.find(hotel => hotel['hotel-id'] === parseInt(hotelId));
+    console.log("Cart in handleBooking:", cart);
+
+    let selectedHotel = cart.find(hotel => hotel['hotel-id'] === hotelId);
+
+    console.log("Selected Hotel:", selectedHotel);
 
     if (!selectedHotel) {
         alert('No hotel selected for booking!');
@@ -241,37 +247,46 @@ function handleBooking(hotelId) {
     }
 
     if (selectedHotel['available-rooms'] > 0) {
-        fetch("http://localhost:3000/updateAvailableRooms", {
+        fetch("updateAvailableRooms.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                hotelId: selectedHotel['hotel-id'],
-                decrementBy: 1
+            "hotel-id": selectedHotel['hotel-id'],
+            decrementBy: 1
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                selectedHotel['available-rooms'] -= 1;
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                alert('Hotel booked successfully!');
-                displayCart();
-            } else {
-                alert('Failed to book the hotel.');
+        .then(response => {
+            return response.text();
+        })
+        .then(responseText => {
+            console.log("Raw Response:", responseText);
+            try {
+                const data = JSON.parse(responseText);
+                console.log("Parsed Data:", data);
+        
+                if (data.success) {
+                    selectedHotel['available-rooms'] -= 1;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    displayCart();
+                    alert('Hotel booked successfully!');
+                } else {
+                    alert('Failed to book the hotel: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error parsing response:', error);
+                alert('Error parsing server response. Please try again.');
             }
         })
         .catch(error => {
-            console.error('Error updating available rooms:', error);
-            alert('Failed to book the hotel. Please try again.');
+            console.error('Error:', error);
+            alert('Error updating available rooms. Please try again.');
         });
     } else {
         alert('No rooms available!');
     }
 }
-
 
 function displayCart() {
 	let cart = JSON.parse(localStorage.getItem('cart')) || [];
