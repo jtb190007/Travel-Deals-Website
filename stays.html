@@ -122,6 +122,12 @@
 		const checkin = new Date(document.getElementById("checkin").value);
 		const checkout = new Date(document.getElementById("checkout").value);
 
+		localStorage.setItem('checkin', checkin);
+    	localStorage.setItem('checkout', checkout);
+    	localStorage.setItem('adults', adults);
+    	localStorage.setItem('children', children);
+    	localStorage.setItem('infants', infants);
+
 		var errors = [];
 
 		if (document.getElementById("states").value == "Please choose a State" || document.getElementById("cities").value == "Please choose a City") {
@@ -239,6 +245,9 @@
 	}
 
 	function displayHotelResults(hotels) {
+		const checkin = new Date(document.getElementById("checkin").value);
+		const checkout = new Date(document.getElementById("checkout").value);
+
   		let resultsDiv = document.getElementById('hotelResults');
   		resultsDiv.innerHTML = '';
 
@@ -247,6 +256,7 @@
     		hotelDiv.classList.add('hotel');
 
     		hotelDiv.innerHTML = `
+				<p>Hotel-ID: ${hotel['hotel-id']}</p>
       			<p>Hotel Name: ${hotel['hotel-name']}</p>
       			<p>City: ${hotel.city}</p>
       			<p>Price per Night: $${hotel['price-per-night']}</p>
