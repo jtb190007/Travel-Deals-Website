@@ -91,6 +91,7 @@
 <p id="results">None</p>
 <h3>Available Hotels:</h3>
 <p id="hotelResults"></p>
+<button class="addHotel" data-hotel-id="${hotel['hotel-id']}">Add Hotel</button>
 </div>
 
 <h3>Below are contributors:</h3>
@@ -225,7 +226,7 @@
     		.then(response => response.json())
     		.then(data => {
       			let hotels = data.hotels;
-      			let availableHotels = hotels.filter(hotel => 
+      			availableHotels = hotels.filter(hotel => 
         			hotel.city === city && 
         			hotel["available-rooms"] > 0 && 
         			new Date(hotel.date) >= new Date(checkin) && 
@@ -247,19 +248,35 @@
       			<p>Hotel Name: ${hotel['hotel-name']}</p>
       			<p>City: ${hotel.city}</p>
       			<p>Price per Night: $${hotel['price-per-night']}</p>
-      			<p><button onclick="addHotelToCart(${hotel['hotel-id']})">Add to Cart</button></p>
-				<p><button onclick="handleBooking(${hotel['hotel-id']})">Book Now</button></p>
     			`;
     		resultsDiv.appendChild(hotelDiv);
   		});
-
-		document.querySelectorAll('.book-button').forEach(button => {
-        	button.addEventListener('click', function() {
-            	const hotelId = button.getAttribute('hotel-id');
-            	handleBooking(hotelId);
-        	});
-    	});
 	}
+
+function addHotelToCart(hotelId) {
+	if (!availableHotels || !availableHotels.hotels) {
+		alert('Hotels data is not available!');
+		return;
+	}
+
+	const hotel = availableHotels.hotels.find(hotel => hotel['hotel-id'] === hotelId);
+	if (!hotel) {
+		alert('Hotel not found');
+		return;
+	}
+	let cart = JSON.parse(localStorage.getItem('cart')) || [];
+	cart.push(hotel);
+	localStorage.setItem('cart', JSON.stringify(cart));
+	alert('Hotel added to cart!');
+}
+
+
+	document.querySelectorAll('.addHotel').forEach(button => {
+		button.addEventListener('click', function() {
+			const hotelId = this.getAttribute('data-hotel-id');
+			addHotelToCart(hotelId);
+		});
+	});
 
 </script>
 
