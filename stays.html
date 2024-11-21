@@ -91,7 +91,6 @@
 <p id="results">None</p>
 <h3>Available Hotels:</h3>
 <p id="hotelResults"></p>
-<button class="addHotel" data-hotel-id="${hotel['hotel-id']}">Add Hotel</button>
 </div>
 
 <h3>Below are contributors:</h3>
@@ -234,6 +233,9 @@
       		);
       	displayHotelResults(availableHotels);
     	})
+		.catch(error => {
+            console.error('Error fetching hotels:', error);
+        });
 	}
 
 	function displayHotelResults(hotels) {
@@ -248,18 +250,27 @@
       			<p>Hotel Name: ${hotel['hotel-name']}</p>
       			<p>City: ${hotel.city}</p>
       			<p>Price per Night: $${hotel['price-per-night']}</p>
+				<button class="addHotel" data-hotel-id="${hotel['hotel-id']}">Add Hotel</button>
     			`;
     		resultsDiv.appendChild(hotelDiv);
   		});
+
+		document.querySelectorAll('.addHotel').forEach(button => {
+			button.addEventListener('click', function() {
+				const hotelId = this.getAttribute('data-hotel-id');
+				addHotelToCart(hotelId);
+			});
+		});
+		
 	}
 
 function addHotelToCart(hotelId) {
-	if (!availableHotels || !availableHotels.hotels) {
+	if (!availableHotels || availableHotels.length === 0) {
 		alert('Hotels data is not available!');
 		return;
 	}
 
-	const hotel = availableHotels.hotels.find(hotel => hotel['hotel-id'] === hotelId);
+	const hotel = availableHotels.find(hotel => hotel['hotel-id'] === hotelId);
 	if (!hotel) {
 		alert('Hotel not found');
 		return;
@@ -269,14 +280,6 @@ function addHotelToCart(hotelId) {
 	localStorage.setItem('cart', JSON.stringify(cart));
 	alert('Hotel added to cart!');
 }
-
-
-	document.querySelectorAll('.addHotel').forEach(button => {
-		button.addEventListener('click', function() {
-			const hotelId = this.getAttribute('data-hotel-id');
-			addHotelToCart(hotelId);
-		});
-	});
 
 </script>
 
