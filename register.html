@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>Register</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Register</h1>
+<h3>Register to Soar</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+<li><a href="cart.html">My Cart</a></li>
+
+</ul>
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+<p>To register, please provided the following information:</p>
+
+    <form name="registerForm" onsubmit="return validateRegisterForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required style="margin: 5px 0px" placeholder="Ex. John">
+	<br>
+	<label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required style="margin: 5px 0px" placeholder="Ex. Doe">
+	<br>
+	<label for="gender">Gender:</label>
+        <input type="radio" id="male" name="gender" value="Male">
+	<label for="gender">Male</label>
+	<input type="radio" id="female" name="gender" value="Female">
+	<label for="gender">Female</label>
+	<input type="radio" id="prefer" name="gender" value="I prefer not to say">
+	<label for="gender">I prefer not to say</label>
+	<br>
+	<label for="birth_date">Date of Birth:</label>
+	<input type="date" id="birth_date" name="birth_date" required>
+	<br>
+	<label for="email">Email Address:</label>
+        <input type="text" id="email" name="email" required style="margin: 5px 0px" placeholder="Ex. name@mail.com">
+	<br>
+	<label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
+	<br>
+	<label for="password">Password:</label>
+        <input type="password" id="password" name="password" required style="margin: 5px 0px">
+	<br>
+	<label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required style="margin: 5px 0px">
+	<br>
+        <button type="submit">Submit User Info</button>
+    </form>
+
+</br>
+
+<p>Already registered? <a href="login.html">Log in</a>.</p>
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+
+<script>
+	var defaultBorder = document.getElementById("firstName").style.borderColor;
+	var errorBorder = "#ff4d4d";
+
+	function validateRegisterForm() {
+		var firstName = document.forms["registerForm"]["firstName"].value;
+		var lastName = document.forms["registerForm"]["lastName"].value;
+		var phoneNumber = document.forms["registerForm"]["phoneNumber"].value;
+		var email = document.forms["registerForm"]["email"].value;
+		var password = document.forms["registerForm"]["password"].value;
+		var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
+
+		var errors = [];
+
+		var nameRegex = /^[A-Z][a-z]+$/;
+		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
+		var emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
+		var passwordRegex = /.{8,}/;
+
+		if (!nameRegex.test(firstName)) {
+			errors.push("First name must be alphabetic only and have the first letter be capital");
+			document.getElementById("firstName").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("firstName").style.borderColor = defaultBorder;
+		}
+
+		if (!nameRegex.test(lastName)) {
+			errors.push("Last name must be alphabetic only and have the first letter be capital");
+			document.getElementById("lastName").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("lastName").style.borderColor = defaultBorder;
+		}
+
+		if (firstName == lastName) {
+			errors.push("First name and last name can not be the same");
+			document.getElementById("firstName").style.borderColor = errorBorder;
+			document.getElementById("lastName").style.borderColor = errorBorder;
+		}
+
+		if (!phoneRegex.test(phoneNumber)) {
+			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
+			document.getElementById("phoneNumber").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
+		}
+
+		if (!emailRegex.test(email)) {
+			errors.push("Email address must contain @ and .");
+			document.getElementById("email").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("email").style.borderColor = defaultBorder;
+		}
+
+		if (!passwordRegex.test(password)) {
+			errors.push("Password must be at least 8 characters");
+			document.getElementById("password").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("password").style.borderColor = defaultBorder;
+		}
+
+		if (password != confirmPassword) {
+			errors.push("Password is not the same. Please correct");
+			document.getElementById("confirmPassword").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("confirmPassword").style.borderColor = defaultBorder;
+		}
+
+		if (errors.length > 0) {
+			if (errors.length == 1) {
+				var e = "Error detected: \n";
+			} else {
+				var e = "Errors detected: \n";
+			}
+			alert(e + "* " + errors.join("\n* "));
+			return false;
+		} else {
+			alert("Form submitted successfully!");
+		}
+	}
+
+	function convertPhoneNumber(phone) {
+		var phoneRegex = /^\((\d{3})\) (\d{3})-(\d{4})$/;
+		const match = phone.match(phoneRegex);
+		if (match) {
+			return `${match[1]}-${match[2]}-${match[3]}`;
+		}
+		return phone;
+	}
+
+</script>
+
+</html>

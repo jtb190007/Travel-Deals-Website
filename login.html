@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>Login</title>
+
+<p id="time" class="time"></p>
+
+<div class="header">
+<h1>Welcome to Travel Deals</h1>
+<h3>Soar Without Limits</h3>
+</div>
+
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="register.html">Register</a></li>
+<li><a href="contact-us.html">Contact Us</a></li>
+<li><a href="flight.html">Flight</a></li>
+<li><a href="stays.html">Stays</a></li>
+<li><a href="car.html">Car</a></li>
+<li><a href="cruises.html">Cruise</a></li>
+<li><a href="cart.html">My Cart</a></li>
+
+</ul>
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="side">
+	<form name="changeForm" onsubmit="return changeWeb()" onreset="resetWeb()">
+		<label for="font">Font (between 1 and 50):</label>
+		<input type="number" id="font" name="font" value="16" min="1" max="50">
+		</br>
+		<label for="color">Select a background color:</label>
+		<input type="color" id="color" name="color" value="#ffffff">
+		</br>
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset">
+	</form>
+</div>
+
+<div class="main">
+
+<p>To log in, please enter your phone number and password</p>
+
+    <form name="loginForm" onsubmit="return validateLoginForm()">
+	<label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
+	<br>
+	<label for="password">Password:</label>
+        <input type="password" id="password" name="password" required style="margin: 5px 0px">
+	<br>
+        <button type="submit">Log in</button>
+    </form>
+</div>
+
+</div>
+
+</br>
+</br>
+</br>
+<h3>Below are contributors:</h3>
+
+<div class="footer">
+<p>Yusef Alimam (YIA180000)</p>
+<p>John Bui (JTB190007)</p>
+<p>Cesar Saenz (CAS190006)</p>
+<p>CS 6314.002</p>
+</div>
+
+
+<script>
+	var defaultBorder = document.getElementById("phoneNumber").style.borderColor;
+	var errorBorder = "#ff4d4d";
+
+	function validateRegisterForm() {
+		var phoneNumber = document.forms["loginForm"]["phoneNumber"].value;
+		var password = document.forms["loginForm"]["password"].value;
+
+		var errors = [];
+
+		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
+		var passwordRegex = /.{8,}/;
+
+		if (!phoneRegex.test(phoneNumber)) {
+			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
+			document.getElementById("phoneNumber").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
+		}
+
+		if (errors.length > 0) {
+			if (errors.length == 1) {
+				var e = "Error detected: \n";
+			} else {
+				var e = "Errors detected: \n";
+			}
+			alert(e + "* " + errors.join("\n* "));
+			return false;
+		} else {
+			alert("Form submitted successfully!");
+		}
+	}
+
+</script>
+
+</html>
