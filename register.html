@@ -69,7 +69,7 @@
         <input type="text" id="email" name="email" required style="margin: 5px 0px" placeholder="Ex. name@mail.com">
 	<br>
 	<label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
+        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="ddd-ddd-dddd">
 	<br>
 	<label for="password">Password:</label>
         <input type="password" id="password" name="password" required style="margin: 5px 0px">
@@ -115,7 +115,7 @@
 		var errors = [];
 
 		var nameRegex = /^[A-Z][a-z]+$/;
-		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
+		var phoneRegex = /[0-9]{3}-[0-9]{3}-[0-9]{4}/;
 		var emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
 		var passwordRegex = /.{8,}/;
 
