@@ -55,11 +55,11 @@
         <input type="text" id="lastName" name="lastName" required style="margin: 5px 0px" placeholder="Ex. Doe">
 	<br>
 	<label for="gender">Gender:</label>
-        <input type="radio" id="male" name="gender" value="Male">
+        <input type="radio" id="male" name="gender" value="male">
 	<label for="gender">Male</label>
-	<input type="radio" id="female" name="gender" value="Female">
+	<input type="radio" id="female" name="gender" value="female">
 	<label for="gender">Female</label>
-	<input type="radio" id="prefer" name="gender" value="I prefer not to say">
+	<input type="radio" id="prefer" name="gender" value="disclosed">
 	<label for="gender">I prefer not to say</label>
 	<br>
 	<label for="birth_date">Date of Birth:</label>
@@ -107,10 +107,18 @@
 	function validateRegisterForm() {
 		var firstName = document.forms["registerForm"]["firstName"].value;
 		var lastName = document.forms["registerForm"]["lastName"].value;
-		var phoneNumber = document.forms["registerForm"]["phoneNumber"].value;
+		var gender = document.forms["registerForm"]["gender"].value;
+		var birthDate = document.forms["registerForm"]["birth_date"].value;
 		var email = document.forms["registerForm"]["email"].value;
+		var phoneNumber = document.forms["registerForm"]["phoneNumber"].value;
 		var password = document.forms["registerForm"]["password"].value;
 		var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
+
+		//alert(birthDate);
+		//alert(gender == "");
+
+		//alert(birthDate);
+		//alert(birthDate.toString());
 
 		var errors = [];
 
@@ -140,7 +148,7 @@
 		}
 
 		if (!phoneRegex.test(phoneNumber)) {
-			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
+			errors.push("Phone number must be formatted as ddd-ddd-dddd");
 			document.getElementById("phoneNumber").style.borderColor = errorBorder;
 		} else {
 			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
@@ -177,8 +185,35 @@
 			return false;
 		} else {
 			alert("Form submitted successfully!");
+			registerUser(firstName, lastName, gender, birthDate, email, phoneNumber, password);
+			return false;
 		}
 	}
+
+	function registerUser(firstName, lastName, gender, birthDate, email, phoneNumber, password) {
+		let registeredUsers = [];
+
+  		fetch('registeredusers.json')
+    		.then(response => response.json())
+    		.then(data => {
+      			let users = data.users;
+      			registeredUsers = users.filter(user =>
+				user["phone-number"] === phoneNumber ||
+				user.password === password
+			);
+
+		if (registeredUsers == "") {
+			alert("No user found");
+		} else {
+			alert("Phone number and/or password is already in use");
+		}
+
+    		})
+		.catch(error => {
+            		console.error('Error fetching users:', error);
+        	});	
+	}
+
 
 	function convertPhoneNumber(phone) {
 		var phoneRegex = /^\((\d{3})\) (\d{3})-(\d{4})$/;
