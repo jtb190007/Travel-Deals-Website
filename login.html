@@ -6,10 +6,11 @@
 <title>Login</title>
 
 <p id="time" class="time"></p>
+<p id="logedUser" class="time">Nothing</p>
 
 <div class="header">
-<h1>Welcome to Travel Deals</h1>
-<h3>Soar Without Limits</h3>
+<h1>Login</h1>
+<h3>Login to Soar</h3>
 </div>
 
 <div class="nav">
@@ -49,13 +50,15 @@
 
     <form name="loginForm" onsubmit="return validateLoginForm()">
 	<label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
+        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="ddd-ddd-dddd">
 	<br>
 	<label for="password">Password:</label>
         <input type="password" id="password" name="password" required style="margin: 5px 0px">
 	<br>
         <button type="submit">Log in</button>
     </form>
+
+<p id="show">Hi</p>
 </div>
 
 </div>
@@ -77,20 +80,27 @@
 	var defaultBorder = document.getElementById("phoneNumber").style.borderColor;
 	var errorBorder = "#ff4d4d";
 
-	function validateRegisterForm() {
+	function validateLoginForm() {
 		var phoneNumber = document.forms["loginForm"]["phoneNumber"].value;
 		var password = document.forms["loginForm"]["password"].value;
 
 		var errors = [];
 
-		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
+		var phoneRegex = /[0-9]{3}-[0-9]{3}-[0-9]{4}/;
 		var passwordRegex = /.{8,}/;
 
 		if (!phoneRegex.test(phoneNumber)) {
-			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
+			errors.push("Phone number must be formatted as ddd-ddd-dddd");
 			document.getElementById("phoneNumber").style.borderColor = errorBorder;
 		} else {
 			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
+		}
+
+		if (!passwordRegex.test(password)) {
+			errors.push("Password must be at least 8 characters");
+			document.getElementById("password").style.borderColor = errorBorder;
+		} else {
+			document.getElementById("password").style.borderColor = defaultBorder;
 		}
 
 		if (errors.length > 0) {
@@ -103,7 +113,55 @@
 			return false;
 		} else {
 			alert("Form submitted successfully!");
+			findUser(phoneNumber, password);
+			return false;
 		}
+	}
+
+	function findUser(phoneNumber, password) {
+		let registeredUsers = [];
+
+  		fetch('registeredusers.json')
+    		.then(response => response.json())
+    		.then(data => {
+      			let users = data.users;
+      			registeredUsers = users.filter(user =>
+				user["phone-number"] === phoneNumber &&
+				user.password === password
+			);
+
+		if (registeredUsers == "") {
+			alert("Incorrect phone number and/or password");
+		} else {
+			alert("User found.");
+			displayStuff(registeredUsers);
+		}
+
+    		})
+		.catch(error => {
+            		console.error('Error fetching users:', error);
+        	});
+	}
+
+	function displayStuff(registeredUsers) {
+		let results = document.getElementById("show");
+		results.innerHTML = '';
+
+  		registeredUsers.forEach(user => {
+    		let userDiv = document.createElement('div');
+    		userDiv.classList.add('user');
+
+    		userDiv.innerHTML = `
+			<p>User Info</p>
+			<p>Phone Number: ${user['phone-number']}</p>
+			<p>First Name: ${user['first-name']}</p>
+			<p>Last Name: ${user['last-name']}</p>
+			<p>Birth Date: ${user['birth-date']}</p>
+			<p>Gender: ${user['gender']}</p>
+			<p>Email: ${user['email']}</p>
+      			<p>Password: ${user['password']}</p>`;
+    		results.appendChild(userDiv);
+  		});
 	}
 
 </script>
