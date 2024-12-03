@@ -20,9 +20,8 @@
             <li><a href="contact-us.html">Contact Us</a></li>
             <li><a href="flight.html">Flight</a></li>
             <li><a href="stays.html">Stays</a></li>
-            <li><a href="car.html">Car</a></li>
-            <li><a href="cruises.html">Cruise</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="#">Car</a></li>
+            <li><a href="#">Cruise</a></li>
         </ul>
     </div>
 
@@ -49,10 +48,6 @@
                 <h2>Booking Confirmation</h2>
                 <p id="confirmationDetails"></p>
             </div>
-            <h3>Hotel Cart:</h3>
-            <p id="cart-results"></p>
-            <button id="clearCartButton">Clear Hotel Cart</button>
-
         </div>
     </div>
 
@@ -64,60 +59,81 @@
     </div>
 
     <script>
+
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Loading cart page...");
 
     const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight"));
-    console.log("Retrieved selected flight from localStorage:", selectedFlight);
+    const departingFlight = JSON.parse(localStorage.getItem("departingFlight"));
+    const returningFlight = JSON.parse(localStorage.getItem("returningFlight"));
 
-    if (!selectedFlight) {
-        //alert("No flight selected. Redirecting to the search page.");
-        //window.location.href = "flight.html";
-        return;
-    }
-
-    const availableSeats = parseInt(selectedFlight.availableSeats) || 0;
-    const pricePerAdult = parseFloat(selectedFlight.price) || 0;
-
-    console.log("Parsed availableSeats:", availableSeats);
-    console.log("Parsed pricePerAdult:", pricePerAdult);
-
-    if (availableSeats <= 0) {
-        //alert("No seats are available for the selected flight.");
-        //window.location.href = "flight.html";
+    if (!selectedFlight && !departingFlight) {
+        alert("No flight selected. Redirecting to the search page.");
+        window.location.href = "flight.html";
         return;
     }
 
     const flightInfoDiv = document.getElementById("flightInfo");
-    flightInfoDiv.innerHTML = `
-        <p>
-            Flight ID: ${selectedFlight.flightId}<br>
-            Origin: ${selectedFlight.origin}<br>
-            Destination: ${selectedFlight.destination}<br>
-            Departure Date: ${selectedFlight.departureDate}<br>
-            Departure Time: ${selectedFlight.departureTime}<br>
-            Arrival Date: ${selectedFlight.arrivalDate}<br>
-            Arrival Time: ${selectedFlight.arrivalTime}<br>
-            Price per Adult: $${pricePerAdult.toFixed(2)}<br>
-            Available Seats: ${availableSeats}
-        </p>
-    `;
-
     const passengerFormDiv = document.getElementById("passengerDetails");
+
     const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
     const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
     const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
 
-    console.log("Number of Adults:", numAdults);
-    console.log("Number of Children:", numChildren);
-    console.log("Number of Infants:", numInfants);
+    console.log("Passengers: Adults:", numAdults, ", Children:", numChildren, ", Infants:", numInfants);
+
+    let totalPrice = 0;
+
+    if (selectedFlight != null) {
+        // One-way flight
+        displayFlightDetails(flightInfoDiv, selectedFlight, "Selected Flight");
+        totalPrice = calculateTotalPrice(selectedFlight.price, numAdults, numChildren, numInfants);
+    } else if (departingFlight && returningFlight) {
+        // Round-trip flight
+        displayFlightDetails(flightInfoDiv, departingFlight, "Departing Flight");
+        displayFlightDetails(flightInfoDiv, returningFlight, "Returning Flight");
+
+        totalPrice =
+            calculateTotalPrice(departingFlight.price, numAdults, numChildren, numInfants) +
+            calculateTotalPrice(returningFlight.price, numAdults, numChildren, numInfants);
+    } else {
+        alert("Incomplete flight selection. Please ensure both departing and returning flights are selected.");
+        return;
+    }
+
+    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
 
     addPassengerFields(passengerFormDiv, "Adult", numAdults);
     addPassengerFields(passengerFormDiv, "Child", numChildren);
     addPassengerFields(passengerFormDiv, "Infant", numInfants);
-
-    calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants);
 });
+
+function displayFlightDetails(container, flight, title) {
+    container.innerHTML += `
+        <h3>${title}</h3>
+        <p>
+            Flight ID: ${flight.flightId}<br>
+            Origin: ${flight.origin}<br>
+            Destination: ${flight.destination}<br>
+            Departure Date: ${flight.departureDate}<br>
+            Departure Time: ${flight.departureTime}<br>
+            Arrival Date: ${flight.arrivalDate}<br>
+            Arrival Time: ${flight.arrivalTime}<br>
+            Price per Adult: $${parseFloat(flight.price).toFixed(2)}<br>
+            Available Seats: ${parseInt(flight.availableSeats)}
+        </p>
+    `;
+}
+
+function calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants) {
+    console.log("Calculating total price for:", pricePerAdult);
+    return (
+        pricePerAdult * numAdults +
+        pricePerAdult * 0.7 * numChildren +
+        pricePerAdult * 0.1 * numInfants
+    );
+}
 
 function addPassengerFields(container, type, count) {
     console.log(`Adding ${count} passenger fields for type: ${type}`);
@@ -132,85 +148,117 @@ function addPassengerFields(container, type, count) {
     }
 }
 
-function calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants) {
-    console.log("Calculating total price...");
-    console.log("Price per Adult:", pricePerAdult);
-    console.log("Adults:", numAdults, "Children:", numChildren, "Infants:", numInfants);
-
-    const totalPrice =
-        pricePerAdult * numAdults +
-        pricePerAdult * 0.7 * numChildren +
-        pricePerAdult * 0.1 * numInfants;
-
-    console.log("Total Price:", totalPrice);
-
-    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
-}
 
 function bookFlight(event) {
     event.preventDefault();
 
     console.log("Booking flight...");
 
-    // Retrieve selected flight and passenger counts from localStorage
-    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight"));
+    const departingFlight = JSON.parse(localStorage.getItem("departingFlight"));
+    const returningFlight = JSON.parse(localStorage.getItem("returningFlight"));
+    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight")); // For one-way flights
     const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
     const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
     const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
     const numPassengers = numAdults + numChildren + numInfants;
 
-    console.log("Selected flight:", selectedFlight);
     console.log("Passengers: Adults:", numAdults, ", Children:", numChildren, ", Infants:", numInfants);
     console.log("Total passengers:", numPassengers);
 
-    if (!selectedFlight || !selectedFlight.flightId || numPassengers <= 0) {
+    if (departingFlight && returningFlight) {
+        Promise.all([
+            updateSeats(departingFlight.flightId, numPassengers),
+            updateSeats(returningFlight.flightId, numPassengers),
+        ])
+            .then(([departingResponse, returningResponse]) => {
+                console.log("Round-trip booking responses:", { departingResponse, returningResponse });
+                alert("Round-trip booking confirmed!");
+                showBookingConfirmation(departingFlight, returningFlight, departingResponse.remainingSeats, returningResponse.remainingSeats);
+            })
+            .catch((error) => {
+                console.error("Error booking round-trip:", error);
+                alert("Failed to book round-trip. Please try again.");
+            });
+    } else if (selectedFlight) {
+        updateSeats(selectedFlight.flightId, numPassengers)
+            .then((response) => {
+                console.log("One-way booking response:", response);
+                alert("One-way booking confirmed!");
+                showBookingConfirmation(selectedFlight, null, response.remainingSeats);
+            })
+            .catch((error) => {
+                console.error("Error booking one-way flight:", error);
+                alert("Failed to book one-way flight. Please try again.");
+            });
+    } else {
         alert("Invalid flight selection or passenger details.");
         return;
     }
+}
 
-    if (selectedFlight.availableSeats < numPassengers) {
-        alert("Not enough seats available for this booking.");
-        return;
+function updateSeats(flightId, decrementBy) {
+    const url = `http://localhost:5500/updateSeats.php?flightId=${flightId}&decrementBy=${decrementBy}`;
+    return fetch(url)
+        .then((response) => {
+            console.log(`Response from ${url}:`, response);
+            if (!response.ok) {
+                console.error(`Error with status code: ${response.status}`);
+                return response.text().then((text) => {
+                    console.error("Response body:", text);
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                });
+            }
+            return response.text().then((text) => {
+                console.log("Raw response text:", text);
+                try {
+                    const json = JSON.parse(text);
+                    console.log("Parsed JSON:", json);
+                    return json;
+                } catch (error) {
+                    console.error("Failed to parse JSON:", error);
+                    throw new Error(`Invalid JSON response: ${text}`);
+                }
+            });
+        });
+}
+
+
+
+function showBookingConfirmation(departingFlight, returningFlight = null, remainingSeatsDeparting, remainingSeatsReturning = null) {
+    const bookingNumber = "BN" + Math.floor(100000 + Math.random() * 900000);
+    const confirmationDiv = document.getElementById("bookingConfirmation");
+
+    let details = `
+        <p>Booking Number: ${bookingNumber}</p>
+        <h3>Departing Flight</h3>
+        <p>
+            Flight ID: ${departingFlight.flightId}<br>
+            Origin: ${departingFlight.origin}<br>
+            Destination: ${departingFlight.destination}<br>
+            Departure Date: ${departingFlight.departureDate}<br>
+            Departure Time: ${departingFlight.departureTime}<br>
+            Remaining Seats: ${remainingSeatsDeparting}
+        </p>
+    `;
+
+    if (returningFlight) {
+        details += `
+            <h3>Returning Flight</h3>
+            <p>
+                Flight ID: ${returningFlight.flightId}<br>
+                Origin: ${returningFlight.origin}<br>
+                Destination: ${returningFlight.destination}<br>
+                Departure Date: ${returningFlight.departureDate}<br>
+                Departure Time: ${returningFlight.departureTime}<br>
+                Remaining Seats: ${remainingSeatsReturning}
+            </p>
+        `;
     }
 
-    // Construct the URL for the GET request
-    const url = `http://localhost:3000/updateSeats.php?flightId=${selectedFlight.flightId}&decrementBy=${numPassengers}`;
-
-    // Use `fetch` to send the GET request to update seats
-    fetch("http://localhost:3000/updateSeats", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        flightId: selectedFlight.flightId,
-        decrementBy: numPassengers,
-    }),
-})
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log("Backend response:", data);
-
-        if (data.message === "Flight updated successfully") {
-            selectedFlight.availableSeats -= numPassengers;
-            localStorage.setItem("selectedFlight", JSON.stringify(selectedFlight));
-            alert("Seats updated successfully!");
-            showBookingConfirmation(selectedFlight, data.newSeats);
-        } else {
-            throw new Error(data.message || "Failed to update seats.");
-        }
-    })
-    .catch((error) => {
-        console.error("Error updating seats:", error);
-        alert("Failed to update seats. Please try again.");
-    });
-
+    confirmationDiv.innerHTML = details;
+    confirmationDiv.style.display = "block";
 }
+
 
 function showBookingConfirmation(flight, remainingSeats) {
     const bookingNumber = "BN" + Math.floor(100000 + Math.random() * 900000);
@@ -230,140 +278,9 @@ function showBookingConfirmation(flight, remainingSeats) {
     alert("Booking confirmed! Details are displayed below.");
 }
 
-function handleBooking(hotelId) {
-    console.log("Hotel ID passed to handleBooking:", hotelId);
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log("Cart in handleBooking:", cart);
-
-    let selectedHotel = cart.find(hotel => hotel['hotel-id'] === hotelId);
-    console.log("Selected Hotel:", selectedHotel);
-
-    if (!selectedHotel) {
-        alert('No hotel selected for booking!');
-        return;
-    }
-
-    if (selectedHotel['available-rooms'] <= 0) {
-        alert('No rooms available!');
-        return;
-    }
-
-    const checkInDate = localStorage.getItem('checkin');
-    const checkOutDate = localStorage.getItem('checkout');
-    const numAdults = parseInt(localStorage.getItem('adults')) || 0;
-    const numChildren = parseInt(localStorage.getItem('children')) || 0;
-    const numInfants = parseInt(localStorage.getItem('infants')) || 0;
-
-    if (!checkInDate || !checkOutDate || new Date(checkInDate) >= new Date(checkOutDate)) {
-        alert("Please enter valid check-in and check-out dates.");
-        return;
-    }
-
-    fetch("updateAvailableRooms.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "hotel-id": selectedHotel['hotel-id'],
-            decrementBy: 1
-        }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Failed to update available rooms");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Update Rooms Response:", data);
-
-        if (!data.success) {
-            alert('Failed to update available rooms: ' + data.message);
-            return;
-        }
-
-        const bookingData = {
-            "hotel-id": selectedHotel['hotel-id'],
-            "hotel-name": selectedHotel['hotel-name'],
-            "city": selectedHotel.city,
-            "price-per-night": selectedHotel['price-per-night'],
-            "checkin": checkInDate,
-            "checkout": checkOutDate,
-            "adults": numAdults,
-            "children": numChildren,
-            "infants": numInfants,
-            "rooms": 1
-        };
-
-        return fetch("bookhotel.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(bookingData),
-        });
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Failed to process booking");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Booking Response:", data);
-
-        if (data.success) {
-            alert("Hotel booked successfully!");
-            selectedHotel['available-rooms'] -= 1;
-            localStorage.setItem('cart', JSON.stringify(cart));
-            displayCart();
-        } else {
-            alert("Failed to book the hotel: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error("Error during booking process:", error);
-        //alert("There was an error processing the booking. Please try again.");
-    });
-}
-
-
-function displayCart() {
-	let cart = JSON.parse(localStorage.getItem('cart')) || [];
-	const cartResultsDiv = document.getElementById('cart-results');
-	if (cart.length === 0) {
-		cartResultsDiv.innerHTML = "<p>Your cart is empty.</p>";
-		return;
-	}
-	cartResultsDiv.innerHTML = '';
-	cart.forEach(hotel => {
-		const hotelDiv = document.createElement('div');
-		hotelDiv.classList.add('cart-item');
-		hotelDiv.innerHTML = `
-			<p><strong>${hotel['hotel-name']}</strong></p>
-			<p>City: ${hotel.city}</p>
-			<p>Price per Night: $${hotel['price-per-night']}</p>
-			<p>Available Rooms: ${hotel['available-rooms']}</p>
-            <button class="book-now" data-hotel-id="${hotel['hotel-id']}">Book Now</button>
-		`;
-		cartResultsDiv.appendChild(hotelDiv);
-	});
-    document.querySelectorAll('.book-now').forEach(button => {
-        button.addEventListener('click', function() {
-            const hotelId = this.getAttribute('data-hotel-id');
-            handleBooking(hotelId);
-        });
-    });
-}
-document.addEventListener('DOMContentLoaded', function() {
-    displayCart();
-});
-document.getElementById('clearCartButton').addEventListener('click', function() {
-    localStorage.removeItem('cart');
-    displayCart();
-});
     </script>
+
+
 </body>
 </html>
