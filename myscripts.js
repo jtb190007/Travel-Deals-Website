@@ -24,7 +24,21 @@ function showTime() {
 		var dateTime = date + ' ' + time;
 		timeText.innerHTML = dateTime;
 	}
-	window.onload = function() {showTime(); setInterval(showTime, 1000);}
+
+function showUser() {
+	if (typeof(Storage) !== "undefined") {
+		if (sessionStorage.user) {
+			let user = JSON.parse(sessionStorage.user);
+			let name = user["first-name"] + " " + user["last-name"]
+			document.getElementById("logedUser").innerHTML = name;
+		} else {
+			document.getElementById("logedUser").innerHTML = "";
+		}
+	} else {
+		document.getElementById("logedUser").innerHTML = "";
+	}
+}
+	window.onload = function() {showTime(); showUser(); setInterval(showTime, 1000);}
 
 function changeWeb() {
 	var font = document.forms["changeForm"]["font"].value.toString() + "px";

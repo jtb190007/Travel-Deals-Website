@@ -6,7 +6,7 @@
 <title>Login</title>
 
 <p id="time" class="time"></p>
-<p id="logedUser" class="time">Nothing</p>
+<p id="logedUser" class="time"></p>
 
 <div class="header">
 <h1>Login</h1>
@@ -134,6 +134,8 @@
 			alert("Incorrect phone number and/or password");
 		} else {
 			alert("User found.");
+			sessionStorage.setItem('user', JSON.stringify(registeredUsers[0]))
+			showUser();
 			displayStuff(registeredUsers);
 		}
 
