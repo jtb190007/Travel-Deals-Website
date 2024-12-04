@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contacts>
+  <contact>
+    <contact-id>1</contact-id>
+    <comment>This is a test comment. Does it show?</comment>
+    <phone-number>222-222-2222</phone-number>
+    <first-name>Admin</first-name>
+    <last-name>Admin</last-name>
+    <birth-date>Admin</birth-date>
+    <gender>null</gender>
+    <email>example@admin.com</email>
+  </contact>
+</contacts>
