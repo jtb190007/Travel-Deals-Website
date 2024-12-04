@@ -32,10 +32,10 @@ function showUser() {
 			let name = user["first-name"] + " " + user["last-name"]
 			document.getElementById("logedUser").innerHTML = name;
 		} else {
-			document.getElementById("logedUser").innerHTML = "";
+			document.getElementById("logedUser").innerHTML = "<a href='login.html'>Log in Here</a>";
 		}
 	} else {
-		document.getElementById("logedUser").innerHTML = "";
+		document.getElementById("logedUser").innerHTML = "<a href='login.html'>Log in Here</a>";
 	}
 }
 	window.onload = function() {showTime(); showUser(); setInterval(showTime, 1000);}
