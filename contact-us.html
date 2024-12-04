@@ -6,6 +6,7 @@
 <title>Contact Us</title>
 
 <p id="time" class="time"></p>
+<p id="logedUser" class="time"></p>
 
 <div class="header">
 <h1>Contact Us</h1>
@@ -16,6 +17,7 @@
 <div class="nav">
 <ul>
 <li><a href="home.html">Home</a></li>
+<li><a href="register.html">Register</a></li>
 <li><a href="contact-us.html">Contact Us</a></li>
 <li><a href="flight.html">Flight</a></li>
 <li><a href="stays.html">Stays</a></li>
@@ -43,31 +45,10 @@
 </div>
 
 <div class="main">
-
+    <p>Please log in to comment</p>
     <form name="contactForm" onsubmit="return validateContactForm()">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required style="margin: 5px 0px" placeholder="Ex. John">
-	<br>
-	<label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required style="margin: 5px 0px" placeholder="Ex. Doe">
-	<br>
-	<label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" required style="margin: 5px 0px" placeholder="(ddd) ddd-dddd">
-	<br>
-	<label for="gender">Gender:</label>
-        <input type="radio" id="male" name="gender" value="Male" required>
-	<label for="gender">Male</label>
-	<input type="radio" id="female" name="gender" value="Female">
-	<label for="gender">Female</label>
-	<input type="radio" id="prefer" name="gender" value="I prefer not to say">
-	<label for="gender">I prefer not to say</label>
-	<br>
-	<label for="email">Email Address:</label>
-        <input type="text" id="email" name="email" required style="margin: 5px 0px" placeholder="Ex. name@mail.com">
-	<br>
-	<label for="email">Comments:</label>
+	<label for="comment">Comments:</label>
         <textarea id="comment" name="comment" rows="4" cols="50" required style="margin: 5px 0px"></textarea>
-
 	<br>
         <button type="submit">Submit Info</button>
     </form>
@@ -87,56 +68,14 @@
 </div>
 
 <script>
-	var defaultBorder = document.getElementById("firstName").style.borderColor;
+	var defaultBorder = document.getElementById("comment").style.borderColor;
 	var errorBorder = "#ff4d4d";
 
 	function validateContactForm() {
-		var firstName = document.forms["contactForm"]["firstName"].value;
-		var lastName = document.forms["contactForm"]["lastName"].value;
-		var phoneNumber = document.forms["contactForm"]["phoneNumber"].value;
-		var email = document.forms["contactForm"]["email"].value;
 		var comment = document.forms["contactForm"]["comment"].value;
 
 		var errors = [];
-
-		var nameRegex = /^[A-Z][a-z]+$/;
-		var phoneRegex = /\([0-9]{3}\) [0-9]{3}-[0-9]{4}/;
-		var emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
 		var commentRegex = /.{10,}/;
-
-		if (!nameRegex.test(firstName)) {
-			errors.push("First name must be alphabetic only and have the first letter be capital");
-			document.getElementById("firstName").style.borderColor = errorBorder;
-		} else {
-			document.getElementById("firstName").style.borderColor = defaultBorder;
-		}
-
-		if (!nameRegex.test(lastName)) {
-			errors.push("Last name must be alphabetic only and have the first letter be capital");
-			document.getElementById("lastName").style.borderColor = errorBorder;
-		} else {
-			document.getElementById("lastName").style.borderColor = defaultBorder;
-		}
-
-		if (firstName == lastName) {
-			errors.push("First name and last name can not be the same");
-			document.getElementById("firstName").style.borderColor = errorBorder;
-			document.getElementById("lastName").style.borderColor = errorBorder;
-		}
-
-		if (!phoneRegex.test(phoneNumber)) {
-			errors.push("Phone number must be formatted as (ddd) ddd-dddd");
-			document.getElementById("phoneNumber").style.borderColor = errorBorder;
-		} else {
-			document.getElementById("phoneNumber").style.borderColor = defaultBorder;
-		}
-
-		if (!emailRegex.test(email)) {
-			errors.push("Email address must contain @ and .");
-			document.getElementById("email").style.borderColor = errorBorder;
-		} else {
-			document.getElementById("email").style.borderColor = defaultBorder;
-		}
 
 		if (!commentRegex.test(comment)) {
 			errors.push("Comments must be at least 10 characters");
@@ -154,8 +93,48 @@
 			alert(e + "* " + errors.join("\n* "));
 			return false;
 		} else {
-			endorser();
+			//endorser();
+			makeComment(comment);
 			alert("Form submitted successfully!");
+		}
+	}
+
+	function makeComment(comment) {
+		if (typeof(Storage) !== "undefined") {
+			if (sessionStorage.user) {
+				let user = JSON.parse(sessionStorage.user);
+				user['comment'] = comment;
+
+				return fetch("saveComment.php", {
+            				method: "POST",
+					headers: {
+            					"Content-Type": "application/json",
+        				},
+            				body: JSON.stringify(user),
+        			})
+    				.then(response => {
+        				if (!response.ok) {
+            					throw new Error("Failed to process comment");
+        				}
+        				return response.json();
+    				})
+    				.then(data => {
+        				console.log("Comment Response:", data);
+
+        				if (data.success) {
+            					alert("Comment saved successfully!");
+        				} else {
+            					alert("Failed to save the comment: " + data.message);
+        				}
+    				})
+    				.catch(error => {
+        				console.error("Error during saving process:", error);
+        				alert("There was an error saving the comment. Please try again.");
+    				});
+			} else {
+				alert("Please log in to comment");
+				return false;
+			}
 		}
 	}
 
