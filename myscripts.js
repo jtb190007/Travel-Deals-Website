@@ -40,6 +40,23 @@ function showUser() {
 }
 	window.onload = function() {showTime(); showUser(); setInterval(showTime, 1000);}
 
+function isAdmin() {
+	if (typeof(Storage) !== "undefined") {
+		if (sessionStorage.user) {
+			let user = JSON.parse(sessionStorage.user);
+			if (user["phone-number"] === "222-222-2222") {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 function changeWeb() {
 	var font = document.forms["changeForm"]["font"].value.toString() + "px";
 	document.getElementsByClassName("main")[0].style.fontSize = font;
