@@ -22,9 +22,7 @@
 <li><a href="stays.html">Stays</a></li>
 <li><a href="car.html">Car</a></li>
 <li><a href="cruises.html">Cruise</a></li>
-<li><a href="cart.html">My Cart</a></li>
-<li><a href = "login.html"> User Login</a></li>
-<li><a href = "my-account.html"> My Account</a></li>
+<li><a href="cart.html">Cart</a></li>
 
 </ul>
 </div>
@@ -60,7 +58,6 @@
         <button type="submit">Log in</button>
     </form>
 
-<p id="show">Hi</p>
 </div>
 
 </div>
@@ -114,13 +111,12 @@
 			alert(e + "* " + errors.join("\n* "));
 			return false;
 		} else {
-			alert("Form submitted successfully!");
-			findUser(phoneNumber, password);
+			registerUser(phoneNumber, password);
 			return false;
 		}
 	}
 
-	function findUser(phoneNumber, password) {
+	function registerUser(phoneNumber, password) {
 		let registeredUsers = [];
 
   		fetch('registeredusers.json')
@@ -135,37 +131,15 @@
 		if (registeredUsers == "") {
 			alert("Incorrect phone number and/or password");
 		} else {
-			alert("User found.");
+			alert("Form submitted successfully! User successfully registered!");
 			sessionStorage.setItem('user', JSON.stringify(registeredUsers[0]))
 			showUser();
-			displayStuff(registeredUsers);
 		}
 
     		})
 		.catch(error => {
             		console.error('Error fetching users:', error);
         	});
-	}
-
-	function displayStuff(registeredUsers) {
-		let results = document.getElementById("show");
-		results.innerHTML = '';
-
-  		registeredUsers.forEach(user => {
-    		let userDiv = document.createElement('div');
-    		userDiv.classList.add('user');
-
-    		userDiv.innerHTML = `
-			<p>User Info</p>
-			<p>Phone Number: ${user['phone-number']}</p>
-			<p>First Name: ${user['first-name']}</p>
-			<p>Last Name: ${user['last-name']}</p>
-			<p>Birth Date: ${user['birth-date']}</p>
-			<p>Gender: ${user['gender']}</p>
-			<p>Email: ${user['email']}</p>
-      			<p>Password: ${user['password']}</p>`;
-    		results.appendChild(userDiv);
-  		});
 	}
 
 </script>
