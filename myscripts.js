@@ -30,7 +30,7 @@ function showUser() {
 		if (sessionStorage.user) {
 			let user = JSON.parse(sessionStorage.user);
 			let name = user["first-name"] + " " + user["last-name"]
-			document.getElementById("logedUser").innerHTML = name;
+			document.getElementById("logedUser").innerHTML = "<a href='my-account.html'>" + name + "</a>";
 		} else {
 			document.getElementById("logedUser").innerHTML = "<a href='login.html'>Log in Here</a>";
 		}
