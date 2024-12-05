@@ -393,10 +393,9 @@ function handleBooking(hotelId) {
     });
 }
 
-fetch('bookings.xml') // Replace with the path to your XML file
+fetch('bookings.xml')
     .then(response => response.text())
     .then(data => {
-                // Parse the XML data
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(data, 'application/xml');
                 

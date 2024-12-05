@@ -1,4 +1,5 @@
 <?php
+
 $host = 'localhost';
 $dbname = 'hoteldb';
 $username = 'yofriend';

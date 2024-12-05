@@ -1,6 +1,5 @@
 <?php
 
-// Database connection
 $host = 'localhost';
 $dbname = 'hoteldb';
 $username = 'yofriend';
