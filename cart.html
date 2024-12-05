@@ -33,8 +33,8 @@
             </div>
             <p id="availableSeats"></p>
             <h2>Selected Hotel</h2>
-            <div>
-                
+            <div id="selectedHotelInfo">
+                <!-- Hotel info inserted here -->
             </div>
         </div>
 
@@ -75,6 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const departingFlight = JSON.parse(localStorage.getItem("departingFlight"));
     const returningFlight = JSON.parse(localStorage.getItem("returningFlight"));
 
+    const selectedHotel = JSON.parse(localStorage.getItem('selectedHotel'));
+
     if (!selectedFlight && !departingFlight) {
         alert("No flight selected. Redirecting to the search page.");
         window.location.href = "flight.html";
@@ -114,6 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
     addPassengerFields(passengerFormDiv, "Adult", numAdults);
     addPassengerFields(passengerFormDiv, "Child", numChildren);
     addPassengerFields(passengerFormDiv, "Infant", numInfants);
+
+    displaySelectedHotel(selectedHotel);
 });
 
 function displayFlightDetails(container, flight, title) {
@@ -151,10 +155,15 @@ function addPassengerFields(container, type, count) {
             Last Name: <input type="text" name="${type.toLowerCase()}LastName${i}" required><br>
             Date of Birth: <input type="date" name="${type.toLowerCase()}Dob${i}" required><br>
             SSN: <input type="text" name="${type.toLowerCase()}Ssn${i}" required><br>
+            Category: 
+            <select name="${type.toLowerCase()}Category${i}" required>
+                <option value="adult">Adult</option>
+                <option value="child">Child</option>
+                <option value="infant">Infant</option>
+            </select><br><br>
         `;
     }
 }
-
 
 function bookFlight(event) {
     event.preventDefault();
@@ -384,6 +393,38 @@ function handleBooking(hotelId) {
     });
 }
 
+fetch('bookings.xml') // Replace with the path to your XML file
+    .then(response => response.text())
+    .then(data => {
+                // Parse the XML data
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, 'application/xml');
+                
+        const bookings = xmlDoc.getElementsByTagName('booking');
+                
+        const container = document.getElementById('selectedHotelInfo');
+
+        Array.from(bookings).forEach(booking => {
+            const bookingDiv = document.createElement('div');
+            bookingDiv.classList.add('booking');
+                    
+            bookingDiv.innerHTML = `
+                <h3>Booking Details</h3>
+                <div class="field">Hotel ID: ${booking.querySelector('hotel-id').textContent}</div>
+                <div class="field">Hotel Name: ${booking.querySelector('hotel-name').textContent}</div>
+                <div class="field">City: ${booking.querySelector('city').textContent}</div>
+                <div class="field">Price Per Night: ${booking.querySelector('price-per-night').textContent}</div>
+                <div class="field">Rooms: ${booking.querySelector('rooms').textContent}</div>
+                <div class="field">Total Price: ${booking.querySelector('total-price').textContent}</div>
+                <div class="field">Check-in: ${booking.querySelector('checkin').textContent}</div>
+                <div class="field">Check-out: ${booking.querySelector('checkout').textContent}</div>
+                <div class="field">Adults: ${booking.querySelector('adults').textContent}</div>
+                <div class="field">Children: ${booking.querySelector('children').textContent}</div>
+                <div class="field">Infants: ${booking.querySelector('infants').textContent}</div>
+            `;
+            container.appendChild(bookingDiv);
+        });
+    })
 
 function displayCart() {
 	let cart = JSON.parse(localStorage.getItem('cart')) || [];

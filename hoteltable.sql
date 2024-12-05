@@ -8,9 +8,9 @@ CREATE TABLE hotels (
 CREATE TABLE hotel_booking (
     hotel_booking_id INT PRIMARY KEY,
     hotel_id INT,
-    check_in_date DATE,
-    check_out_date DATE,
-    number_of_rooms INT,
+    checkin DATE,
+    checkout DATE,
+    rooms INT,
     price_per_night DECIMAL(10, 2),
     total_price DECIMAL(10, 2),
     FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)

@@ -269,6 +269,7 @@
 			button.addEventListener('click', function() {
 				const hotelId = this.getAttribute('data-hotel-id');
 				addHotelToCart(hotelId);
+				localStorage.setItem('selectedHotel', hotelId);
 			});
 		});
 		

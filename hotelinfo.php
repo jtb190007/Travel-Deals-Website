@@ -13,6 +13,8 @@ try {
     exit;
 }
 
+$pdo->exec("DELETE FROM hotels");
+
 $jsonData = file_get_contents('availablehotels.json');  
 
 $data = json_decode($jsonData, true);
