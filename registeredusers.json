@@ -4,18 +4,18 @@
 	"phone-number":"222-222-2222",
 	"first-name":"Admin",
 	"last-name":"Admin",
-	"birth-date":"Admin",
+	"birth-date":"2024-10-02",
 	"gender":"null",
 	"email":"example@admin.com",
 	"password":"Password"
       },
       {
 	"phone-number":"123-456-7890",
-	"first-name":"Test",
-	"last-name":"1",
-	"birth-date":"1234",
-	"gender":"null",
-	"email":"example@admin.com",
+	"first-name":"Testing",
+	"last-name":"User",
+	"birth-date":"2024-11-11",
+	"gender":"female",
+	"email":"user@testing.com",
 	"password":"12345678"
       }
     ]
