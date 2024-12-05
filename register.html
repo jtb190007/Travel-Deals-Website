@@ -60,7 +60,7 @@
 	<label for="gender">Male</label>
 	<input type="radio" id="female" name="gender" value="female">
 	<label for="gender">Female</label>
-	<input type="radio" id="prefer" name="gender" value="disclosed">
+	<input type="radio" id="prefer" name="gender" value="null">
 	<label for="gender">I prefer not to say</label>
 	<br>
 	<label for="birth_date">Date of Birth:</label>
@@ -205,6 +205,34 @@
 
 		if (registeredUsers == "") {
 			alert("No user found");
+			let userInfo = {"phone-number": phoneNumber, "first-name": firstName, "last-name": lastName, "birth-date": birthDate, "gender": gender, "email": email, "password": password};
+
+			return fetch("addUser.php", {
+            			method: "POST",
+				headers: {
+            				"Content-Type": "application/json",
+        			},
+            			body: JSON.stringify(userInfo),
+        		})
+    			.then(response => {
+        			if (!response.ok) {
+            				throw new Error("Failed to process user.");
+        			}
+        			return response.json();
+    			})
+   			.then(data => {
+        			console.log("Comment Response:", data);
+
+        			if (data.success) {
+            				alert("User added successfully!");
+        			} else {
+            				alert("Failed to add the user: " + data.message);
+        			}
+    			})
+    			.catch(error => {
+        			console.error("Error during adding user:", error);
+        			alert("There was an error adding the user. Please try again.");
+    			});
 		} else {
 			alert("Phone number and/or password is already in use");
 		}
