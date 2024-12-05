@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mystyle.css">
+<script src="myscripts.js"></script>
+
+<title>My Account</title>
+
+<div class="header">
+  <h1>My Account</h1>
+</div>
+
+<div class="nav">
+  <ul>
+    <li><a href="home.html">Home</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="contact-us.html">Contact Us</a></li>
+    <li><a href="flight.html">Flight</a></li>
+    <li><a href="stays.html">Stays</a></li>
+    <li><a href="car.html">Car</a></li>
+    <li><a href="cruises.html">Cruise</a></li>
+    <li><a href="cart.html">My Cart</a></li>
+  </ul>
+</div>
+
+<br>
+
+<div class="main">
+  <h2 id="greeting"></h2>
+  <div id="accountInfo">
+    <!-- Account information will be displayed here -->
+  </div>
+</div>
+
+<div class="footer">
+  <p>Yusef Alimam (YIA180000)</p>
+  <p>John Bui (JTB190007)</p>
+  <p>Cesar Saenz (CAS190006)</p>
+  <p>CS 6314.002</p>
+</div>
+
+<script>
+  function displayAccountPage() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const greeting = document.getElementById("greeting");
+    const accountInfo = document.getElementById("accountInfo");
+
+    if (user) {
+      // Greet the user by their first name
+      greeting.innerText = `Hello, ${user['first-name']}!`;
+
+      if (user['phone-number'] === "222-222-2222") {
+        // Admin-specific message
+        accountInfo.innerHTML = `
+          <p>Welcome, Admin. Here is your information:</p>
+          <p>Phone Number: ${user['phone-number']}</p>
+          <p>First Name: ${user['first-name']}</p>
+          <p>Last Name: ${user['last-name']}</p>
+          <p>Email: ${user['email']}</p>
+        `;
+      } else {
+        // General user information
+        accountInfo.innerHTML = `
+          <p>Your account details:</p>
+          <p>Phone Number: ${user['phone-number']}</p>
+          <p>First Name: ${user['first-name']}</p>
+          <p>Last Name: ${user['last-name']}</p>
+          <p>Birth Date: ${user['birth-date']}</p>
+          <p>Gender: ${user['gender']}</p>
+          <p>Email: ${user['email']}</p>
+        `;
+      }
+    } else {
+      // If no user is logged in, redirect to login page
+      greeting.innerText = "You are not logged in.";
+      accountInfo.innerHTML = `<p>Please <a href="login.html">log in</a> to view your account.</p>`;
+    }
+  }
+
+  // Call the function to display user account information
+  displayAccountPage();
+</script>
+
+</html>
