@@ -8,40 +8,30 @@ $password = 'helloworld123';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    exit;
-}
 
-// Check if data was sent
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Loop through the form data and insert it into the database
-    $count = count($_POST) / 5; // Assuming 5 fields per passenger (first name, last name, dob, ssn, category)
+    $sql = "INSERT INTO guests (ssn, hotel_booking_id, first_name, last_name, date_of_birth, category) 
+            VALUES (:ssn, :hotel_booking_id, :first_name, :last_name, :date_of_birth, :category)";
     
-    for ($i = 0; $i < $count; $i++) {
-        // Get the data for each passenger
-        $firstName = $_POST["firstName$i"];
-        $lastName = $_POST["lastName$i"];
-        $dob = $_POST["dob$i"];
-        $ssn = $_POST["ssn$i"];
-        $category = $_POST["category$i"];
+    $stmt = $pdo->prepare($sql);
 
-        // Insert the data into the 'guests' table
-        $stmt = $pdo->prepare("INSERT INTO guests (ssn, first_name, last_name, date_of_birth, category) 
-                               VALUES (:ssn, :first_name, :last_name, :date_of_birth, :category)");
-        $stmt->execute([
-            ':ssn' => $ssn,
-            ':first_name' => $firstName,
-            ':last_name' => $lastName,
-            ':date_of_birth' => $dob,
-            ':category' => $category
-        ]);
-    }
+    $stmt->bindParam(':ssn', $ssn);
+    $stmt->bindParam(':hotel_booking_id', $hotel_booking_id);
+    $stmt->bindParam(':first_name', $first_name);
+    $stmt->bindParam(':last_name', $last_name);
+    $stmt->bindParam(':date_of_birth', $date_of_birth);
+    $stmt->bindParam(':category', $category);
 
-    // Respond with a success message (JSON response)
-    echo json_encode(['status' => 'success', 'message' => 'Guest data saved successfully']);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'No data received']);
+    $ssn = '33334444';
+    $hotel_booking_id = 1;
+    $first_name = 'YUSEF';
+    $last_name = 'ALIMAM';
+    $date_of_birth = '2001-11-11';
+    $category = 'adult';
+
+    $stmt->execute();
+
+    echo "Values inserted successfully!";
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
-
 ?>

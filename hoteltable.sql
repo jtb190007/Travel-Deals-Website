@@ -1,3 +1,4 @@
+/* Uncomment if tables do not exist
 CREATE TABLE hotels (
     hotel_id INT PRIMARY KEY,
     hotel_name VARCHAR(255),
@@ -25,3 +26,23 @@ CREATE TABLE guests (
     category VARCHAR(20),
     FOREIGN KEY (hotel_booking_id) REFERENCES hotel_booking(hotel_booking_id)
 );
+*/
+
+SELECT * FROM hotel_booking WHERE hotel_booking_id = @hotel_booking_id;
+
+SELECT *
+FROM hotel_booking hb
+JOIN hotels h ON hb.hotel_id = h.hotel_id
+WHERE h.city IN ('Austin', 'Dallas', 'Houston', 'San Antonio')
+AND hb.checkin BETWEEN '2024-09-01' AND '2024-10-31';
+
+/*
+SELECT * FROM hotel_booking
+ORDER BY total_price DESC
+LIMIT 1;
+*/
+
+/*
+SELECT TOP 1 * FROM hotel_booking
+ORDER BY total_price DESC;
+*/
