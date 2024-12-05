@@ -47,7 +47,12 @@
                 <p>Total Price: $<span id="totalPrice"></span></p>
                 <button type="submit">Book Flight</button>
             </form>
-
+            <form id="passengerForm" onsubmit="submitPassengerForm(event)">
+                <div id="passengerDetails">
+                    <!-- Passenger input fields will be dynamically added here -->
+                </div>
+                <button type="submit">Submit</button>
+            </form>
             <div id="bookingConfirmation" style="display: none;">
                 <h2>Booking Confirmation</h2>
                 <p id="confirmationDetails"></p>
@@ -117,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addPassengerFields(passengerFormDiv, "Child", numChildren);
     addPassengerFields(passengerFormDiv, "Infant", numInfants);
 
-    displaySelectedHotel(selectedHotel);
 });
 
 function displayFlightDetails(container, flight, title) {
@@ -164,6 +168,38 @@ function addPassengerFields(container, type, count) {
         `;
     }
 }
+
+function submitPassengerForm(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const passengerFormDiv = document.getElementById("passengerDetails");
+    addPassengerFields(passengerFormDiv, "Adult", numAdults);
+    addPassengerFields(passengerFormDiv, "Child", numChildren);
+    addPassengerFields(passengerFormDiv, "Infant", numInfants);
+
+    // Prepare form data
+    const form = document.getElementById('passengerForm');
+    const formData = new FormData(form);  // Collects form data
+
+    // Send the data to PHP
+    fetch('guestsdata.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())  // Expecting a JSON response from PHP
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message); // Success message from PHP
+        } else {
+            alert(data.message); // Error message from PHP
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('Error submitting the form. Please try again.');
+    });
+}
+
 
 function bookFlight(event) {
     event.preventDefault();
