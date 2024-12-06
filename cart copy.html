@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="mystyle.css">
+    
+    <script src="https://use.fontawesome.com/releases/v5.15.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <p id="time" class="time"></p>
+
+    <div class="header">
+        <h1>Cart</h1>
+        <h3>Review and Complete Your Booking</h3>
+    </div>
+
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+            <li><a href="flight.html">Flight</a></li>
+            <li><a href="stays.html">Stays</a></li>
+            <li><a href="#">Car</a></li>
+            <li><a href="#">Cruise</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="side">
+            
+        </div>
+
+        <div class="main">
+            <h2>Selected Flight</h2>
+            <div id="flightInfo">
+                <!-- Flight information will be dynamically inserted here -->
+            </div>
+            <p id="availableSeats"></p>
+            <h2>Enter Passenger Details</h2>
+            <form id="passengerForm" onsubmit="bookFlight(event)">
+                <div id="passengerDetails">
+                    <!-- Passenger input fields will be dynamically added here -->
+                </div>
+                <p>Total Price: $<span id="totalPrice"></span></p>
+                <button type="submit">Book Flight</button>
+            </form>
+
+            <div id="bookingConfirmation" style="display: none;">
+                <h2>Booking Confirmation</h2>
+                <p id="confirmationDetails"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Yusef Alimam (YIA180000)</p>
+        <p>John Bui (JTB190007)</p>
+        <p>Cesar Saenz (CAS190006)</p>
+        <p>CS 6314.002</p>
+    </div>
+
+    <script>
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Loading cart page...");
+
+    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight"));
+    const departingFlight = JSON.parse(localStorage.getItem("departingFlight"));
+    const returningFlight = JSON.parse(localStorage.getItem("returningFlight"));
+
+    if (!selectedFlight && !departingFlight) {
+        alert("No flight selected. Redirecting to the search page.");
+        window.location.href = "flight.html";
+        return;
+    }
+
+    const flightInfoDiv = document.getElementById("flightInfo");
+    const passengerFormDiv = document.getElementById("passengerDetails");
+
+    const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
+    const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
+    const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
+
+    console.log("SELECTED FLIGHT: :", selectedFlight, ", DEPART:", departingFlight, ", RETURN:", returningFlight)
+    console.log("Passengers: Adults:", numAdults, ", Children:", numChildren, ", Infants:", numInfants);
+
+    let totalPrice = 0;
+
+    if (selectedFlight != null) {
+        console.log("ONE WAY TRIP");
+        let oneway = true;
+        // One-way flight
+        displayFlightDetails(flightInfoDiv, selectedFlight, "Selected Flight");
+        totalPrice = calculateTotalPrice(selectedFlight.price, numAdults, numChildren, numInfants);
+    } else if (departingFlight && returningFlight) {
+        console.log("ROUND WAY TRIP");
+        let oneway = false;
+        // Round-trip flight
+        displayFlightDetails(flightInfoDiv, departingFlight, "Departing Flight");
+        displayFlightDetails(flightInfoDiv, returningFlight, "Returning Flight");
+
+        totalPrice =
+            calculateTotalPrice(departingFlight.price, numAdults, numChildren, numInfants) +
+            calculateTotalPrice(returningFlight.price, numAdults, numChildren, numInfants);
+    } else {
+        alert("Incomplete flight selection. Please ensure both departing and returning flights are selected.");
+        return;
+    }
+
+    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+
+    addPassengerFields(passengerFormDiv, "Adult", numAdults);
+    addPassengerFields(passengerFormDiv, "Child", numChildren);
+    addPassengerFields(passengerFormDiv, "Infant", numInfants);
+});
+
+function displayFlightDetails(container, flight, title) {
+    // Create a table element if it doesn't already exist
+    let table = container.querySelector("table");
+    if (!table) {
+        table = document.createElement("table");
+        table.setAttribute(
+            "style",
+            "width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;"
+        ); // Add inline styles for the table
+        table.innerHTML = `
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 12px;">Flight ID</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Origin</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Destination</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Departure Date</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Departure Time</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Arrival Date</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Arrival Time</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Price per Adult</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">Available Seats</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        `;
+        container.appendChild(table);
+    }
+
+    // Insert flight details into the table
+    const tbody = table.querySelector("tbody");
+    tbody.innerHTML += `
+        <tr style="background-color: #f2f2f2;">
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.flightId}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.origin}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.destination}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.departureDate}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.departureTime}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.arrivalDate}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${flight.arrivalTime}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">$${parseFloat(flight.price).toFixed(2)}</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">${parseInt(flight.availableSeats)}</td>
+        </tr>
+    `;
+}
+
+
+function calculateTotalPrice(pricePerAdult, numAdults, numChildren, numInfants) {
+    console.log("Calculating total price for:", pricePerAdult);
+    return (
+        pricePerAdult * numAdults +
+        pricePerAdult * 0.7 * numChildren +
+        pricePerAdult * 0.1 * numInfants
+    );
+}
+
+function addPassengerFields(container, type, count) {
+    console.log(`Adding ${count} passenger fields for type: ${type}`);
+
+    if (!document.getElementById('passengerTable')) {
+        container.innerHTML += `
+            <table id="passengerTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>SSN</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        `;
+    }
+
+    const tableBody = document.querySelector("#passengerTable tbody");
+
+    for (let i = 0; i < count; i++) {
+        const rowHTML = `
+            <tr>
+                <td>${type} ${i + 1}</td>
+                <td><input type="text" name="${type.toLowerCase()}FirstName${i}" required></td>
+                <td><input type="text" name="${type.toLowerCase()}LastName${i}" required></td>
+                <td><input type="date" name="${type.toLowerCase()}Dob${i}" required></td>
+                <td><input type="text" name="${type.toLowerCase()}Ssn${i}" required></td>
+            </tr>
+        `;
+        tableBody.innerHTML += rowHTML;
+    }
+}
+
+
+
+function bookFlight(event) {
+    event.preventDefault();
+
+    console.log("Booking flight...");
+
+    const departingFlight = JSON.parse(localStorage.getItem("departingFlight"));
+    const returningFlight = JSON.parse(localStorage.getItem("returningFlight"));
+    const selectedFlight = JSON.parse(localStorage.getItem("selectedFlight")); // For one-way flights
+    const numAdults = parseInt(localStorage.getItem("numAdults")) || 0;
+    const numChildren = parseInt(localStorage.getItem("numChildren")) || 0;
+    const numInfants = parseInt(localStorage.getItem("numInfants")) || 0;
+    const numPassengers = numAdults + numChildren + numInfants;
+
+    console.log("Passengers: Adults:", numAdults, ", Children:", numChildren, ", Infants:", numInfants);
+    console.log("Total passengers:", numPassengers);
+
+    if (departingFlight && returningFlight) {
+        Promise.all([
+            updateSeats(departingFlight.flightId, numPassengers),
+            updateSeats(returningFlight.flightId, numPassengers)
+        ])
+            .then(([departingResponse, returningResponse]) => {
+                console.log("Departing Response:", departingResponse);
+                console.log("Returning Response:", returningResponse);
+
+                // Pass the parsed remaining seats to the confirmation
+                showBookingConfirmation(
+                    departingFlight,
+                    returningFlight,
+                    departingResponse.remainingSeats,
+                    returningResponse.remainingSeats
+                );
+            })
+            .catch((error) => {
+                console.error("Error booking round-trip:", error);
+                alert("Failed to book round-trip. Please try again.");
+            });
+    } else if (selectedFlight) {
+        updateSeats(selectedFlight.flightId, numPassengers)
+        .then((response) => {
+            console.log("One-way booking response:", response);
+
+            // Pass the parsed remaining seats to the confirmation
+            showBookingConfirmation(selectedFlight, null, response.remainingSeats);
+        })
+        .catch((error) => {
+            console.error("Error booking one-way flight:", error);
+            alert("Failed to book one-way flight. Please try again.");
+        });
+    } else {
+        alert("Invalid flight selection or passenger details.");
+        return;
+    }
+}
+
+function updateSeats(flightId, decrementBy) {
+    const url = `http://localhost:5500/updateSeats.php?flightId=${flightId}&decrementBy=${decrementBy}`;
+    return fetch(url)
+        .then((response) => {
+            console.log(`Response from ${url}:`, response);
+            if (!response.ok) {
+                console.error(`Error with status code: ${response.status}`);
+                return response.text().then((text) => {
+                    console.error("Response body:", text);
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                });
+            }
+            return response.text().then((text) => {
+                console.log("Raw response text:", text);
+                try {
+                    const json = JSON.parse(text);
+                    console.log("Parsed JSON:", json);
+                    return json;
+                } catch (error) {
+                    console.error("Failed to parse JSON:", error);
+                    throw new Error(`Invalid JSON response: ${text}`);
+                }
+            });
+        });
+}
+
+
+function showBookingConfirmation(
+    selectedFlight = null,
+    numAdults = 0,
+    numChildren = 0,
+    numInfants = 0,
+    passengerSSNs = []
+) {
+    if (!selectedFlight) {
+        console.error("No flight selected!");
+        return;
+    }
+
+    // Generate unique IDs for flight booking and tickets
+    const flightBookingId = "FB" + Math.floor(100000 + Math.random() * 900000);
+    const tickets = [];
+    let ticketIdCounter = 1;
+
+    // Calculate total price for all passengers
+    const totalPrice = calculateTotalPrice(
+        selectedFlight.price,
+        numAdults,
+        numChildren,
+        numInfants
+    );
+
+    // Create ticket entries
+    let remainingPassengers = numAdults + numChildren + numInfants;
+    if (passengerSSNs.length !== remainingPassengers) {
+        console.error("Passenger SSNs count does not match total passengers.");
+        return;
+    }
+
+    passengerSSNs.forEach((ssn, index) => {
+        let ticketPrice;
+        if (index < numAdults) {
+            ticketPrice = selectedFlight.price; // Full price for adults
+        } else if (index < numAdults + numChildren) {
+            ticketPrice = selectedFlight.price * 0.7; // 70% price for children
+        } else {
+            ticketPrice = selectedFlight.price * 0.1; // 10% price for infants
+        }
+        tickets.push({
+            ticketId: "T" + ticketIdCounter++,
+            flightBookingId,
+            ssn,
+            price: ticketPrice.toFixed(2),
+        });
+    });
+
+    // Create tables
+    const confirmationDiv = document.getElementById("bookingConfirmation");
+
+    // Flight Booking Table
+    let flightBookingTable = `
+        <h2>Flight Booking</h2>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Flight Booking ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Flight ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${flightBookingId}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${selectedFlight.flightId}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">$${totalPrice.toFixed(2)}</td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+
+    // Tickets Table
+    let ticketsTable = `
+        <h2>Tickets</h2>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Arial, sans-serif;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Ticket ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Flight Booking ID</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">SSN</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    tickets.forEach(ticket => {
+        ticketsTable += `
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">${ticket.ticketId}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${ticket.flightBookingId}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${ticket.ssn}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$${ticket.price}</td>
+            </tr>
+        `;
+    });
+
+    ticketsTable += `
+            </tbody>
+        </table>
+    `;
+
+    // Combine and display tables
+    confirmationDiv.innerHTML = flightBookingTable + ticketsTable;
+    confirmationDiv.style.display = "block";
+}
+
+    </script>
+
+
+</body>
+</html>
